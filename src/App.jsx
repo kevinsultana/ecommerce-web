@@ -8,14 +8,20 @@ import SellerCentre from "./pages/cms/SellerCentre";
 import CmsLayout from "./layout/CmsLayout";
 import AuthLayout from "./layout/AuthLayout";
 import ProductDetail from "./pages/home/ProductDetail";
+import AddNewProduct from "./pages/cms/AddNewProduct";
+import EditProduct from "./pages/cms/EditProduct";
+import Cart from "./pages/home/Cart";
+import UserProfile from "./pages/home/UserProfile";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MainLayout />}>
+        <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
 
         <Route path="/auth" element={<AuthLayout />}>
@@ -25,6 +31,8 @@ export default function App() {
 
         <Route path="/seller" element={<CmsLayout />}>
           <Route index element={<SellerCentre />} />
+          <Route path="new-product" element={<AddNewProduct />} />
+          <Route path="edit-product/:id" element={<EditProduct />} />
         </Route>
       </Routes>
     </BrowserRouter>
