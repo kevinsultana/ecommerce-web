@@ -66,8 +66,8 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-      <div className="card w-full max-w-sm shadow-xl bg-slate-100 dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300">
+    <div className="min-h-screen w-full flex items-center justify-center ">
+      <div className="card w-full max-w-md shadow-xl bg-slate-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
         <div className="card-body">
           <h2 className="card-title text-center text-3xl font-bold mb-6">
             Register

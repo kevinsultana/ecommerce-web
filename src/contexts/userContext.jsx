@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -18,11 +19,14 @@ export const UserProvider = ({ children }) => {
         if (docSnapRef.exists()) {
           const userData = docSnapRef.data();
           setUserRole(userData.role);
+          setUserData(userData);
         } else {
           setUserRole(null);
+          setUserData(null);
         }
       } else {
         setUserRole(null);
+        setUserData(null);
         setUser(null);
       }
     });
@@ -32,7 +36,16 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, userRole, setUserRole, loading, setLoading }}
+      value={{
+        user,
+        setUser,
+        userRole,
+        setUserRole,
+        loading,
+        setLoading,
+        userData,
+        setUserData,
+      }}
     >
       {children}
     </UserContext.Provider>

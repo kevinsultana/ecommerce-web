@@ -12,6 +12,9 @@ export default function CmsLayout() {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
               <Link to="/seller/new-product">Add Product</Link>
             </li>
             <li>

@@ -2,9 +2,16 @@ import React, { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router";
+import { auth } from "../../firebase/firebase";
 
 export default function UserProfile() {
   const { user, userRole, loading } = useContext(UserContext);
+
+  const handleLogOut = () => {
+    auth.signOut().then(() => {
+      navigate("/auth/login", { replace: true });
+    });
+  };
 
   if (loading) {
     return (
@@ -39,15 +46,27 @@ export default function UserProfile() {
               {userRole || "User"}
             </span>
           </p>
-          <div className="card-actions justify-end mt-4">
-            <Link to="/profile/edit" className="btn btn-primary">
+          <div className="card-actions">
+            <Link
+              to="/profile/edit"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
+            >
               Edit Profil
             </Link>
             {userRole === "admin" && (
-              <Link to="/seller" className="btn btn-secondary">
+              <Link
+                to="/seller"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
+              >
                 Go to Seller Centre
               </Link>
             )}
+            <button
+              onClick={handleLogOut}
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
+            >
+              Log Out
+            </button>
           </div>
         </div>
       </div>

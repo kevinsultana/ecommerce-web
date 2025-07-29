@@ -60,13 +60,16 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-      <div className="card w-full max-w-sm shadow-xl bg-slate-100 dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300">
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <div className="card w-full max-w-md shadow-xl bg-slate-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
         <div className="card-body">
           <h2 className="card-title text-center text-3xl font-bold mb-6">
             Login
           </h2>
-          <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+          <form
+            className="flex flex-col gap-4 transition-all duration-300"
+            onSubmit={handleLogin}
+          >
             <div>
               <label className="label">
                 <span className="label-text text-black dark:text-gray-300">
@@ -105,16 +108,14 @@ export default function Login() {
               )}
             </button>
           </form>
-          <div className="divider divider-neutral dark:divider-warning text-gray-500 dark:text-gray-400">
-            OR
-          </div>
+          <div className="divider text-gray-500 dark:text-gray-400">OR</div>
           <button
             onClick={handleGoogleSignIn}
-            className="btn btn-outline btn-error flex items-center gap-2 hover:bg-red-500 hover:text-white"
+            className="btn btn-outline btn-error flex items-center gap-2"
             disabled={loadingBtn}
           >
             <FaGoogle />
-            Login with Google
+            Login dengan Google
           </button>
           <p className="text-center mt-4 text-sm dark:text-gray-300">
             Don't have an account?{" "}
