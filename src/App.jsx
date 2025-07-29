@@ -12,29 +12,32 @@ import AddNewProduct from "./pages/cms/AddNewProduct";
 import EditProduct from "./pages/cms/EditProduct";
 import Cart from "./pages/home/Cart";
 import UserProfile from "./pages/home/UserProfile";
+import { UserProvider } from "./contexts/userContext";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="product/:id" element={<ProductDetail />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="profile" element={<UserProfile />} />
-        </Route>
+      <UserProvider>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="product/:id" element={<ProductDetail />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="profile" element={<UserProfile />} />
+          </Route>
 
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-        </Route>
+          <Route path="/auth" element={<AuthLayout />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
 
-        <Route path="/seller" element={<CmsLayout />}>
-          <Route index element={<SellerCentre />} />
-          <Route path="new-product" element={<AddNewProduct />} />
-          <Route path="edit-product/:id" element={<EditProduct />} />
-        </Route>
-      </Routes>
+          <Route path="/seller" element={<CmsLayout />}>
+            <Route index element={<SellerCentre />} />
+            <Route path="new-product" element={<AddNewProduct />} />
+            <Route path="edit-product/:id" element={<EditProduct />} />
+          </Route>
+        </Routes>
+      </UserProvider>
     </BrowserRouter>
   );
 }
