@@ -7,28 +7,19 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
 export default function MainLayout() {
-  const { user, setUser, userRole, setUserRole } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
+  const { user, setUser, userRole, setUserRole, loading, setLoading } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        setUser(null);
-        navigate("/auth/login", { replace: true });
-      } else {
-        setUser(user);
-      }
-    });
-
-    setLoading(false);
-    return () => unsubscribe();
+    if (!user) {
+      navigate("/auth/login", { replace: true });
+    }
   }, []);
 
   if (loading)
     return (
-      <div className="bg-primaryLight dark:bg-primaryDark text-black dark:text-white w-full h-screen flex items-center justify-center">
+      <div className="bg-slate-900 dark:bg-white text-black dark:text-white w-full h-screen flex items-center justify-center">
         <span className="loading loading-dots loading-xl"></span>
       </div>
     );

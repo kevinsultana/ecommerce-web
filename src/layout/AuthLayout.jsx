@@ -6,28 +6,19 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
 export default function AuthLayout() {
-  const { user, setUser, userRole, setUserRole } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
+  const { user, loading } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser(user);
-        navigate("/", { replace: true });
-      } else {
-        setUser(null);
-      }
-    });
-
-    setLoading(false);
-    return () => unsubscribe();
+    if (user) {
+      navigate("/", { replace: true });
+    }
   }, []);
 
   if (loading)
     return (
-      <div className="bg-primaryLight dark:bg-primaryDark text-black dark:text-white w-full h-screen flex items-center justify-center">
+      <div className="bg-gray-800 dark:bg-white text-black dark:text-white w-full h-screen flex items-center justify-center">
         <span className="loading loading-dots loading-xl"></span>
       </div>
     );

@@ -12,38 +12,35 @@ import { FaGoogle } from "react-icons/fa";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    if (!email) {
+    setLoadingBtn(true);
+
+    if (!email || !password) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Email is required",
+        text: "Email and Password is required",
       });
       return;
     }
-    if (!password) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Password is required",
-      });
-      return;
-    }
+
     try {
-      const response = signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
+      await signInWithEmailAndPassword(auth, email, password);
+      // console.log(response);
+      Swal.fire("Login Success!");
+      setLoadingBtn(false);
+      navigate("/", { replace: true });
     } catch (error) {
-      console.log(error);
+      setLoadingBtn(false);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong!",
+        text: "Invalid email or password",
       });
     }
   };
@@ -81,7 +78,13 @@ export default function Login() {
           placeholder="input password here"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleLogin}>
+          {loadingBtn ? (
+            <span className="loading loading-dots loading-sm"></span>
+          ) : (
+            "Login"
+          )}
+        </button>
       </form>
       <button onClick={handleRegister}>Register</button>
       <button

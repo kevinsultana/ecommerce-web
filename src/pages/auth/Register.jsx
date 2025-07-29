@@ -1,20 +1,20 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    setLoading(true);
     if (!email) {
       Swal.fire({
         icon: "error",
@@ -31,22 +31,40 @@ export default function Register() {
       });
       return;
     }
+    setLoadingBtn(true);
     try {
-      const response = createUserWithEmailAndPassword(auth, email, password);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await setDoc(doc(db, "users", response.user.uid), {
+        userName: userName,
+        email: response.user.email,
+        role: "user",
+        photoProfile: "",
       });
+      setLoadingBtn(false);
+      Swal.fire("Register Success!");
+      navigate("/", { replace: true });
+    } catch (error) {
+      setLoadingBtn(false);
+      let message = "Register Failed";
+      if (error.code === "auth/email-already-in-use") {
+        message = "Email already in use";
+      } else if (error.code === "auth/invalid-email") {
+        message = "Invalid email";
+      } else if (error.code === "auth/weak-password") {
+        message = "Weak password";
+      }
+      Swal.fire(message);
     }
   };
 
   const handleToLogin = () => {
     navigate("/auth/login", { replace: true });
   };
+
   return (
     <div className="min-h-screen">
       <h1>Register</h1>
@@ -69,7 +87,13 @@ export default function Register() {
           placeholder="input password here"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleRegister}>Register</button>
+        <button onClick={handleRegister}>
+          {loadingBtn ? (
+            <span className="loading loading-dots loading-sm"></span>
+          ) : (
+            "Register"
+          )}
+        </button>
       </form>
       <button onClick={handleToLogin}>Login</button>
     </div>
