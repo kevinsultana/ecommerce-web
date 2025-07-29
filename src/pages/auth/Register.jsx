@@ -66,36 +66,76 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen">
-      <h1>Register</h1>
-      <form className="flex flex-col gap-4 border border-gray-400 p-4 w-1/3">
-        <label htmlFor="">User Name</label>
-        <input
-          type="text"
-          placeholder="input User Name here"
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <label htmlFor="">Email</label>
-        <input
-          type="email"
-          placeholder="input email here"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="">Password</label>
-        <input
-          type="password"
-          placeholder="input password here"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleRegister}>
-          {loadingBtn ? (
-            <span className="loading loading-dots loading-sm"></span>
-          ) : (
-            "Register"
-          )}
-        </button>
-      </form>
-      <button onClick={handleToLogin}>Login</button>
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+      <div className="card w-full max-w-sm shadow-xl bg-slate-100 dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300">
+        <div className="card-body">
+          <h2 className="card-title text-center text-3xl font-bold mb-6">
+            Register
+          </h2>
+          <form className="flex flex-col gap-4" onSubmit={handleRegister}>
+            <div>
+              <label className="label">
+                <span className="label-text text-black dark:text-gray-300">
+                  User Name
+                </span>
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan email Anda"
+                className="input input-bordered w-full  text-black bg-slate-200 dark:bg-gray-700 dark:text-white"
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text text-black dark:text-gray-300">
+                  Email
+                </span>
+              </label>
+              <input
+                type="email"
+                placeholder="Masukkan email Anda"
+                className="input input-bordered w-full  text-black bg-slate-200 dark:bg-gray-700 dark:text-white"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text text-black dark:text-gray-300">
+                  Password
+                </span>
+              </label>
+              <input
+                type="password"
+                placeholder="Masukkan password Anda"
+                className="input input-bordered w-full  text-black bg-slate-200 dark:bg-gray-700 dark:text-white"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary mt-4"
+              disabled={loadingBtn}
+            >
+              {loadingBtn ? (
+                <span className="loading loading-dots loading-sm"></span>
+              ) : (
+                "Register"
+              )}
+            </button>
+          </form>
+
+          <p className="text-center mt-4 text-sm dark:text-gray-300">
+            Alredy Have Account?{" "}
+            <button
+              onClick={handleToLogin}
+              className="link link-hover text-blue-500 dark:text-blue-400"
+            >
+              Login Here
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

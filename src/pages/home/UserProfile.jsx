@@ -1,5 +1,56 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
+import { CgProfile } from "react-icons/cg";
+import { Link } from "react-router";
 
 export default function UserProfile() {
-  return <div>UserProfile</div>;
+  const { user, userRole, loading } = useContext(UserContext);
+
+  if (loading) {
+    return (
+      <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white w-full h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-red-500">Anda tidak login.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen p-4 flex items-center justify-center">
+      <div className="card w-full max-w-lg shadow-xl bg-base-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+        <div className="card-body items-center text-center">
+          <CgProfile className="h-24 w-24 mb-4 text-primary" />
+          <h2 className="card-title text-3xl font-bold mb-2">
+            Profil Pengguna
+          </h2>
+          <p className="text-lg mb-2">
+            Email: <span className="font-semibold">{user.email}</span>
+          </p>
+          <p className="text-lg mb-4">
+            Role:
+            <span className="font-semibold capitalize">
+              {userRole || "User"}
+            </span>
+          </p>
+          <div className="card-actions justify-end mt-4">
+            <Link to="/profile/edit" className="btn btn-primary">
+              Edit Profil
+            </Link>
+            {userRole === "admin" && (
+              <Link to="/seller" className="btn btn-secondary">
+                Go to Seller Centre
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
