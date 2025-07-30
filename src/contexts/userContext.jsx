@@ -8,10 +8,11 @@ export const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
@@ -29,8 +30,8 @@ export const UserProvider = ({ children }) => {
         setUserData(null);
         setUser(null);
       }
+      setLoading(false);
     });
-    setLoading(false);
     return () => unsubscribe();
   }, []);
 
@@ -47,7 +48,13 @@ export const UserProvider = ({ children }) => {
         setUserData,
       }}
     >
-      {children}
+      {!loading ? (
+        children
+      ) : (
+        <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white w-full h-screen flex items-center justify-center">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      )}
     </UserContext.Provider>
   );
 };

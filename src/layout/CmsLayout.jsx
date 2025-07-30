@@ -1,8 +1,18 @@
-import React from "react";
-import { Link, Outlet } from "react-router";
+import React, { use, useContext, useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router";
 import DarkModeToggle from "../components/DarkModeToggle";
+import { UserContext } from "../contexts/userContext";
 
 export default function CmsLayout() {
+  const { userRole } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userRole !== "admin") {
+      navigate("/auth/login", { replace: true });
+    }
+  }, [userRole]);
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-gray-800 dark:text-white transition-all duration-300">
       <nav className="navbar bg-base-200 shadow-md dark:bg-gray-700 dark:text-white">

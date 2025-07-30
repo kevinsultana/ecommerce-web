@@ -5,22 +5,15 @@ import DarkModeToggle from "../components/DarkModeToggle";
 import { UserContext } from "../contexts/userContext";
 
 export default function MainLayout() {
-  const { user, loading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user && !loading) {
+    if (!user) {
       navigate("/auth/login", { replace: true });
     }
-  }, [user, loading, navigate]);
-
-  if (loading)
-    return (
-      <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white w-full h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>{" "}
-      </div>
-    );
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-white text-black dark:bg-gray-800 dark:text-white transition-all duration-300">
