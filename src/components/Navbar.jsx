@@ -11,6 +11,13 @@ export default function Navbar() {
   const { userData } = useContext(UserContext);
   const navigate = useNavigate();
 
+  console.log(cartItems);
+
+  const totalProduk = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   const handleProfileClick = () => {
     if (userData) {
       navigate("/profile");
@@ -71,7 +78,7 @@ export default function Navbar() {
               ? null
               : cartItems.length > 0 && (
                   <span className="badge badge-sm indicator-item bg-red-500 text-white">
-                    {cartItems.length}
+                    {totalProduk}
                   </span>
                 )}
           </div>

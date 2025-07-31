@@ -31,8 +31,9 @@ export default function Cart() {
   };
 
   const handleQuantityChange = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    dispatch(editCartProduct({ id, quantity: newQuantity }));
+    const quantity = Number(newQuantity);
+    if (isNaN(quantity) || quantity < 1) return;
+    dispatch(editCartProduct({ id, quantity }));
   };
 
   const totalHarga = cartItems.reduce(
@@ -84,7 +85,7 @@ export default function Cart() {
                     <button
                       className="btn btn-sm btn-circle"
                       onClick={() =>
-                        handleQuantityChange(item.id, Number(item.quantity) - 1)
+                        handleQuantityChange(item.id, item.quantity - 1)
                       }
                     >
                       -
@@ -99,7 +100,7 @@ export default function Cart() {
                       +
                     </button>
                     <span className="text-lg font-semibold ml-4">
-                      Total: ${(item.price * item.quantity).toFixed(2)}
+                      Total: {formatRupiah(item.price * item.quantity)}
                     </span>
                   </div>
                   <div className="card-actions justify-end mt-4">
@@ -123,18 +124,20 @@ export default function Cart() {
             <div className="flex justify-between text-lg mb-2">
               <span className="dark:text-gray-300">Subtotal:</span>
               <span className="font-semibold dark:text-white">
-                ${totalHarga.toFixed(2)}
+                {formatRupiah(totalHarga)}
               </span>
             </div>
             <div className="flex justify-between text-lg mb-4">
               <span className="dark:text-gray-300">Ongkos Kirim:</span>
-              <span className="font-semibold dark:text-white">$5.00</span>{" "}
+              <span className="font-semibold dark:text-white">
+                {formatRupiah(15000)}
+              </span>{" "}
               {/* Contoh ongkir */}
             </div>
             <div className="divider my-2"></div>
             <div className="flex justify-between text-xl font-bold mb-6 text-primary">
               <span>Total:</span>
-              <span>${(totalHarga + 5).toFixed(2)}</span>
+              <span>{formatRupiah(totalHarga + 15000)}</span>
             </div>
             <button className="btn btn-primary w-full">
               Lanjutkan ke Pembayaran

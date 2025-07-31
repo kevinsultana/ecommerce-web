@@ -14,7 +14,8 @@ export default function ProductDetail() {
   const getDataProduct = async () => {
     try {
       const response = await getDoc(doc(db, "products", params.id));
-      setProduct(response.data());
+      const res = response.data();
+      setProduct({ ...res, id: params.id });
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +52,7 @@ export default function ProductDetail() {
         <div className="flex gap-4">
           <button
             onClick={() => {
-              dispatch(addToCart(product));
+              dispatch(addToCart({ ...product, quantity: 1 }));
             }}
             className="btn btn-primary flex-1"
           >
