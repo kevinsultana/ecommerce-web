@@ -1,9 +1,10 @@
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import React, { useEffect, useState, useTransition } from "react";
-import { FaArrowLeft, FaCloudUploadAlt } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { db } from "../../firebase/firebase";
 import Swal from "sweetalert2";
+import CloudinaryUploadBtn from "../../components/CloudinaryUploadBtn";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 export default function AddNewProduct() {
   const [product, setProduct] = useState({
@@ -235,16 +236,9 @@ export default function AddNewProduct() {
                 Belum ada gambar dipilih.
               </p>
             )}
-            <label className="flex items-center justify-center gap-2 px-4 py-8 border-2 border-dashed border-gray-300 rounded-md cursor-pointer dark:border-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
-              <FaCloudUploadAlt className="w-6 h-6" />
-              <span>Upload gambar (jpg, png)</span>
-              <input
-                type="file"
-                name="imgUrl"
-                onChange={handleChange}
-                className="hidden"
-              />
-            </label>
+            <CloudinaryUploadBtn
+              setImgUrl={(i) => setProduct((prev) => ({ ...prev, imgUrl: i }))}
+            />
           </div>
 
           {/* Tombol Aksi */}

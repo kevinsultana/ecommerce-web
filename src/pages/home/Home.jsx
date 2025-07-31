@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { db } from "../../firebase/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import formatRupiah from "../../utils/FormatRupiah";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+
+  const getProducts = async () => {
+    try {
+      const querySnap = await getDocs(collection(db, "products"));
+      const products = querySnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div className="min-h-screen p-4">
@@ -24,65 +45,28 @@ export default function Home() {
       <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
         Produk Unggulan
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {/* Contoh Card Produk */}
-        <div
-          onClick={() => navigate("/product/1")}
-          className="relative block overflow-hidden rounded-lg shadow-xl bg-white dark:bg-gray-800 cursor-pointer"
-        >
-          <figure>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 px-10">
+        {products.map((item) => (
+          <div
+            key={item.id}
+            className="cursor-pointer hover:scale-105 transition duration-300"
+            onClick={() => navigate(`/product/${item.id}`)}
+          >
             <img
-              src="https://via.placeholder.com/300"
-              alt="Produk"
-              className="absolute inset-0 h-full w-full object-cover opacity-75"
+              src={item.imgUrl}
+              alt={item.name}
+              className="w-full h-full object-contain rounded-lg shadow-md"
             />
-          </figure>
-          <div className="relative z-10 p-6 flex flex-col justify-end">
-            <h2 className="text-2xl font-bold mb-2 text-white">Nama Produk</h2>
-            <p className="text-white">Deskripsi singkat produk yang menarik.</p>
-            <div className="flex justify-end mt-4">
-              <button className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Beli Sekarang
-              </button>
-            </div>
+            <h3 className="text-lg font-semibold mt-2">{item.name}</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              {item.description}
+            </p>
+            <div className="flex justify-between mt-2"></div>
+            <span className="text-lg font-semibold">
+              {formatRupiah(item.price)}
+            </span>
           </div>
-        </div>
-        <div className="relative block overflow-hidden rounded-lg shadow-xl bg-white dark:bg-gray-800">
-          <figure>
-            <img
-              src="https://via.placeholder.com/300"
-              alt="Produk"
-              className="absolute inset-0 h-full w-full object-cover opacity-75"
-            />
-          </figure>
-          <div className="relative z-10 p-6 flex flex-col justify-end">
-            <h2 className="text-2xl font-bold mb-2 text-white">Nama Produk</h2>
-            <p className="text-white">Deskripsi singkat produk yang menarik.</p>
-            <div className="flex justify-end mt-4">
-              <button className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Beli Sekarang
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="relative block overflow-hidden rounded-lg shadow-xl bg-white dark:bg-gray-800">
-          <figure>
-            <img
-              src="https://via.placeholder.com/300"
-              alt="Produk"
-              className="absolute inset-0 h-full w-full object-cover opacity-75"
-            />
-          </figure>
-          <div className="relative z-10 p-6 flex flex-col justify-end">
-            <h2 className="text-2xl font-bold mb-2 text-white">Nama Produk</h2>
-            <p className="text-white">Deskripsi singkat produk yang menarik.</p>
-            <div className="flex justify-end mt-4">
-              <button className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Beli Sekarang
-              </button>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
