@@ -10,7 +10,6 @@ export default function Navbar() {
   const cartItems = useSelector((state) => state.cart);
   const { userData } = useContext(UserContext);
   const navigate = useNavigate();
-  console.log(userData);
 
   const handleProfileClick = () => {
     if (userData) {
@@ -21,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar bg-base-100 shadow-md dark:bg-gray-700 dark:text-white">
+    <div className="navbar bg-gray-100 shadow-md dark:bg-gray-700 dark:text-white">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -29,7 +28,7 @@ export default function Navbar() {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 dark:bg-gray-600"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 rounded-box w-52 dark:bg-gray-600"
           >
             <li>
               <Link to="/">Home</Link>
@@ -45,29 +44,36 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to="/" className="text-xl">
           Ecommerce
         </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-full px-4 py-2 w-96">
-          <input
-            type="text"
-            placeholder="Cari produk..."
-            className="input input-ghost w-full focus:outline-none dark:bg-gray-700 dark:text-white"
-          />
-          <BiSearch className="h-5 w-5 text-gray-500 dark:text-gray-300" />
-        </div>
+        <ul className="flex-row items-center px-4 py-2 gap-6 menu">
+          <li className="btn btn-ghost">
+            <Link>Home</Link>
+          </li>
+          <li className="btn btn-ghost">
+            <Link>About</Link>
+          </li>
+          <li className="btn btn-ghost">
+            <Link>Contact Us</Link>
+          </li>
+        </ul>
       </div>
 
-      <div className="navbar-end">
+      <div className="navbar-end space-x-2">
         <Link to="/cart" className="btn btn-ghost btn-circle">
           <div className="indicator">
             <BiCart className="h-6 w-6" />
-            <span className="badge badge-sm indicator-item bg-red-500 text-white">
-              {cartItems.length}
-            </span>
+            {userData === null
+              ? null
+              : cartItems.length > 0 && (
+                  <span className="badge badge-sm indicator-item bg-red-500 text-white">
+                    {cartItems.length}
+                  </span>
+                )}
           </div>
         </Link>
         <button onClick={handleProfileClick} className="btn btn-ghost">
