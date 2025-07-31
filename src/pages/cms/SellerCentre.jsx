@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  FaBoxOpen,
-  FaChartBar,
-  FaClipboardList,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaBoxOpen, FaClipboardList, FaShoppingCart } from "react-icons/fa";
 import { db } from "../../firebase/firebase";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import formatRupiah from "../../utils/FormatRupiah";
+import formatAngka from "../../utils/FormatAngka";
 
 export default function SellerCentre() {
   const [filter, setFilter] = useState("");
@@ -32,24 +29,19 @@ export default function SellerCentre() {
   const dataCard = [
     {
       label: "Total Produk",
-      value: totalProduct,
+      value: formatAngka(totalProduct),
       icon: <FaBoxOpen className="w-6 h-6" />,
     },
     {
       label: "Total Item",
-      value: Number(totalItem),
+      value: formatAngka(Number(totalItem)),
       icon: <FaClipboardList className="w-6 h-6" />,
     },
     {
       label: "Total Harga Barang",
-      value: `Rp. ${totalModal.toLocaleString("id-ID")}`,
+      value: formatRupiah(totalModal),
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
-    // {
-    //   label: "Total Pesanan",
-    //   value: 100,
-    //   icon: <FaChartBar className="w-6 h-6" />,
-    // },
   ];
 
   const getProducts = async () => {
@@ -84,7 +76,6 @@ export default function SellerCentre() {
   }, []);
 
   const handleDelete = async (id) => {
-    console.log(id);
     Swal.fire({
       title: "Apakah Anda yakin?",
       text: "Anda tidak akan bisa mengembalikan ini!",
@@ -100,7 +91,7 @@ export default function SellerCentre() {
         Swal.fire("Dihapus!", "Produk Anda telah dihapus.", "success");
         getProducts();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("Batal", "Produk Anda tidak dihapus.", "info");
+        getProducts();
       }
     });
   };
@@ -218,10 +209,10 @@ export default function SellerCentre() {
                     {item.category}
                   </td>
                   <td className="px-3 py-2 border-r sm:px-6 sm:py-3">
-                    Rp {item.price ? item.price.toLocaleString("id-ID") : "0"}
+                    {item.price ? formatRupiah(item.price) : "0"}
                   </td>
                   <td className="px-3 py-2 border-r sm:px-6 sm:py-3">
-                    {item.stock}
+                    {item.stock ? formatAngka(item.stock) : "0"}
                   </td>
                   <td className="px-3 py-2 space-x-1 sm:px-6 sm:py-3 sm:space-x-2">
                     <button
