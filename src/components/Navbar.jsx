@@ -3,12 +3,22 @@ import { BiCart, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdMenu } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { UserContext } from "../contexts/userContext";
 
 export default function Navbar() {
   const cartItems = useSelector((state) => state.cart);
   const { userData } = useContext(UserContext);
+  const navigate = useNavigate();
+  console.log(userData);
+
+  const handleProfileClick = () => {
+    if (userData) {
+      navigate("/profile");
+    } else {
+      navigate("/auth/login");
+    }
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-md dark:bg-gray-700 dark:text-white">
@@ -60,10 +70,12 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-        <Link to="/profile" className="btn btn-ghost">
+        <button onClick={handleProfileClick} className="btn btn-ghost">
           <CgProfile className="h-6 w-6" />
-          <span className="hidden md:inline">{userData?.userName}</span>
-        </Link>
+          <span className="hidden md:inline">
+            {userData?.userName || "Login Here"}
+          </span>
+        </button>
       </div>
     </div>
   );

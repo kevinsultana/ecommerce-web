@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { CgProfile } from "react-icons/cg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { auth } from "../../firebase/firebase";
 
 export default function UserProfile() {
   const { user, userRole, loading } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleLogOut = () => {
     auth.signOut().then(() => {
-      navigate("/auth/login", { replace: true });
+      navigate("/", { replace: true });
     });
   };
 
@@ -23,15 +24,21 @@ export default function UserProfile() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
         <p className="text-lg text-red-500">Anda tidak login.</p>
+        <button
+          onClick={() => navigate("/auth/login")}
+          className="btn btn-primary"
+        >
+          Login Here
+        </button>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen p-4 flex items-center justify-center">
-      <div className="card w-full max-w-lg shadow-xl bg-base-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+      <div className="card w-full max-w-lg shadow-xl bg-slate-100 dark:bg-gray-700 text-gray-900 dark:text-white">
         <div className="card-body items-center text-center">
           <CgProfile className="h-24 w-24 mb-4 text-primary" />
           <h2 className="card-title text-3xl font-bold mb-2">
