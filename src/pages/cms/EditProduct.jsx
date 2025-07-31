@@ -5,6 +5,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -105,23 +106,34 @@ export default function EditProduct() {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmitUpdate = async (e) => {
     e.preventDefault();
+    try {
+      const productRef = doc(db, "products", id);
+      await updateDoc(productRef, product);
+      Swal.fire("Berhasil", "Produk berhasil diperbarui!", "success");
+      navigate("/seller");
+    } catch (error) {
+      console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat menyimpan data.", "error");
+    }
   };
+
+  // console.log(product);
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow space-y-6">
       <div className="flex items-center gap-3">
         <FaArrowLeft
           className="text-gray-500 dark:text-gray-300 cursor-pointer"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/seller", { replace: true })}
         />
         <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
           Edit Produk
         </h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form className="space-y-4">
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Gambar Produk
@@ -144,7 +156,12 @@ export default function EditProduct() {
           />
           <div className="flex items-center justify-center gap-6">
             <CloudinaryUploadBtn
-              setImgUrl={(i) => setProduct({ ...product, imgUrl: i })}
+              setImgUrl={(i) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  imgUrl: i,
+                }))
+              }
             />
           </div>
         </div>
@@ -217,7 +234,7 @@ export default function EditProduct() {
               {categories.map((category) => (
                 <option
                   key={category.id}
-                  value={category.name}
+                  value={category.value}
                   className="capitalize"
                 >
                   {category.name}
@@ -237,13 +254,14 @@ export default function EditProduct() {
         <div className="flex justify-end gap-3 pt-4">
           <button
             type="button"
-            onClick={() => navigate("/cms")}
+            onClick={() => navigate("/seller", { replace: true })}
             className="px-4 py-2 rounded-md border text-sm dark:text-white dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             Batal
           </button>
           <button
             type="submit"
+            onClick={handleSubmitUpdate}
             className="px-4 py-2 rounded-md bg-indigo-600 text-white text-sm hover:bg-indigo-700"
           >
             Simpan Perubahan
