@@ -32,6 +32,9 @@ export default function Cart() {
 
   const handleQuantityChange = (id, newQuantity) => {
     const quantity = Number(newQuantity);
+    // check availabel stock
+    const totalProduct = cartItems.find((item) => item.id === id)?.stock || 0;
+    if (quantity > totalProduct) return;
     if (isNaN(quantity) || quantity < 1) return;
     dispatch(editCartProduct({ id, quantity }));
   };

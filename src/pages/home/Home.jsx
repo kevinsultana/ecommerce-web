@@ -49,22 +49,24 @@ export default function Home() {
         {products.map((item) => (
           <div
             key={item.id}
-            className="cursor-pointer hover:scale-105 transition duration-300"
+            className="cursor-pointer hover:scale-105 transition duration-300 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md"
             onClick={() => navigate(`/product/${item.id}`)}
           >
-            <img
-              src={item.imgUrl}
-              alt={item.name}
-              className="w-full h-full object-contain rounded-lg shadow-md"
-            />
+            <div className="w-full h-48 overflow-hidden border rounded-md border-gray-300 dark:border-gray-900">
+              <img
+                src={item.imgUrl}
+                alt={item.name}
+                className="w-full h-full object-contain rounded-lg shadow-md"
+              />
+            </div>
             <h3 className="text-lg font-semibold mt-2">{item.name}</h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              {item.description}
-            </p>
-            <div className="flex justify-between mt-2"></div>
-            <span className="text-lg font-semibold">
-              {formatRupiah(item.price)}
-            </span>
+            <div className="py-2"></div>
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-semibold">
+                {formatRupiah(item.price)}
+              </span>
+              <span className="text-sm text-gray-500">terjual</span>
+            </div>
           </div>
         ))}
       </div>

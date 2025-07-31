@@ -42,6 +42,16 @@ export default function SellerCentre() {
       value: formatRupiah(totalModal),
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
+    {
+      label: "Jumlah Pesanan",
+      value: 1,
+      icon: <FaShoppingCart className="w-6 h-6" />,
+    },
+    {
+      label: "Barang terkirim",
+      value: 10,
+      icon: <FaShoppingCart className="w-6 h-6" />,
+    },
   ];
 
   const getProducts = async () => {
@@ -107,7 +117,7 @@ export default function SellerCentre() {
       </h1>
 
       {/* Card Dashboard */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         {dataCard.map((item, i) => (
           <div
             key={i}

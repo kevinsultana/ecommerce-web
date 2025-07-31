@@ -5,10 +5,13 @@ import { addToCart } from "../../redux/features/CartSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import formatRupiah from "../../utils/FormatRupiah";
+import { FaShippingFast } from "react-icons/fa";
+import { FaShop } from "react-icons/fa6";
 
 export default function ProductDetail() {
   const params = useParams();
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
   const getDataProduct = async () => {
@@ -21,46 +24,204 @@ export default function ProductDetail() {
     }
   };
 
+  const handleIncreaseQuantity = () => {
+    if (product.stock && quantity < product.stock) {
+      setQuantity((prevQuantity) => prevQuantity + 1);
+    }
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ ...product, quantity }));
+  };
+
   useEffect(() => {
     getDataProduct();
   }, []);
 
   return (
-    <div className="min-h-screen p-4 flex flex-col lg:flex-row gap-8 items-center lg:items-start justify-center">
-      <div className="w-full lg:w-1/2">
-        <img
-          src={product.imgUrl ? product.imgUrl : ""}
-          alt={product.name}
-          className="w-full h-auto rounded-lg shadow-md"
-        />
-      </div>
-      <div className="w-full h-full lg:w-1/2 card bg-gray-100 shadow-xl dark:bg-gray-800 p-6">
-        <h1 className="text-4xl font-bold mb-4 text-gray-800 dark:text-white">
-          {product.name}
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-          {product.description}
-        </p>
-        <div className="flex items-center mb-4">
-          <span className="text-primary text-3xl font-bold mr-4">
-            {formatRupiah(product.price)}
-          </span>
-          <span className="badge badge-info text-white">
-            Stok: {product.stock}
-          </span>
+    <div className="min-h-screen p-4 md:p-8 bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-all duration-300">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 p-6 md:p-8">
+        {/* Kolom Kiri: Gambar Produk */}
+        <div className="w-full lg:w-2/5 flex flex-col items-center">
+          <div className="w-full h-80 md:h-96 lg:h-[450px] bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md flex items-center justify-center">
+            <img
+              src={
+                product.imgUrl ||
+                "https://placehold.co/400x400/CCCCCC/333333?text=Gambar+Produk"
+              }
+              alt={product.name || "Produk"}
+              className="w-full h-full object-contain rounded-lg"
+            />
+          </div>
+          {/* Thumbnail Gambar */}
+          {product.additionalImages && product.additionalImages.length > 0 && (
+            <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+              {product.additionalImages.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`Thumbnail ${index + 1}`}
+                  className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-md border-2 border-transparent hover:border-blue-500 cursor-pointer transition-all duration-200"
+                  onClick={() =>
+                    setProduct((prev) => ({ ...prev, imgUrl: img }))
+                  } // Ganti gambar utama saat thumbnail diklik
+                />
+              ))}
+            </div>
+          )}
         </div>
-        <div className="flex gap-4">
-          <button
-            onClick={() => {
-              dispatch(addToCart({ ...product, quantity: 1 }));
-            }}
-            className="btn btn-primary flex-1"
-          >
-            Tambahkan ke Keranjang
-          </button>
-          <button className="btn btn-outline btn-secondary flex-1">
-            Beli Sekarang
-          </button>
+
+        {/* Kolom Kanan: Detail Produk */}
+        <div className="w-full lg:w-3/5 space-y-6">
+          {/* Nama Produk */}
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight">
+            {product.name || "Nama Produk Tidak Tersedia"}
+          </h1>
+
+          {/* Rating dan Penjualan */}
+          <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+            {product.rating && (
+              <div className="flex items-center gap-1">
+                <FaStar className="text-yellow-400" />
+                <span>{product.rating}</span>
+                <span className="mx-2">|</span>
+              </div>
+            )}
+            {product.reviews && (
+              <span className="hover:underline cursor-pointer">
+                {product.reviews} Penilaian
+              </span>
+            )}
+            {product.sold && (
+              <>
+                <span className="mx-2">|</span>
+                <span>{product.sold} Terjual</span>
+              </>
+            )}
+          </div>
+
+          {/* Harga */}
+          <div className="flex items-baseline gap-3">
+            {product.originalPrice && product.originalPrice > product.price && (
+              <span className="text-gray-500 dark:text-gray-400 line-through text-xl md:text-2xl">
+                {formatRupiah(product.originalPrice)}
+              </span>
+            )}
+            <span className="text-red-600 dark:text-red-400 text-3xl md:text-5xl font-bold">
+              {formatRupiah(product.price)}
+            </span>
+            {product.originalPrice && product.originalPrice > product.price && (
+              <span className="text-red-600 dark:text-red-400 text-lg md:text-xl font-semibold">
+                {(
+                  ((product.originalPrice - product.price) /
+                    product.originalPrice) *
+                  100
+                ).toFixed(0)}
+                % OFF
+              </span>
+            )}
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+
+          {/* Opsi Kuantitas */}
+          <div className="flex items-center gap-4">
+            <span className="text-gray-700 dark:text-gray-300 font-medium">
+              Kuantitas:
+            </span>
+            <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg">
+              <button
+                onClick={handleDecreaseQuantity}
+                className="p-2 w-10 h-10 flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-l-lg transition-colors"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  if (
+                    !isNaN(val) &&
+                    val >= 1 &&
+                    (product.stock ? val <= product.stock : true)
+                  ) {
+                    setQuantity(val);
+                  }
+                }}
+                className="w-16 text-center bg-transparent border-x border-gray-300 dark:border-gray-600 focus:outline-none text-lg"
+                min="1"
+                max={product.stock || 9999}
+              />
+              <button
+                onClick={handleIncreaseQuantity}
+                className="p-2 w-10 h-10 flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-r-lg transition-colors"
+              >
+                +
+              </button>
+            </div>
+            {product.stock && (
+              <span className="text-gray-500 dark:text-gray-400 text-sm">
+                Stok Tersedia: {product.stock}
+              </span>
+            )}
+          </div>
+
+          {/* Tombol Aksi */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <button
+              onClick={handleAddToCart}
+              className="flex-1 btn btn-primary text-lg py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+              Tambahkan ke Keranjang
+            </button>
+            <button
+              // onClick={handleBuyNow}
+              className="flex-1 btn btn-outline btn-secondary text-lg py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+              Beli Sekarang
+            </button>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+
+          {/* Deskripsi Produk */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Deskripsi Produk
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              {product.description || "Deskripsi produk tidak tersedia."}
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+
+          {/* Informasi Pengiriman  */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <FaShippingFast className="text-green-500" /> Pengiriman
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              Estimasi tiba: 3-5 hari kerja.
+            </p>
+            <p className="text-gray-600 dark:text-gray-300">
+              Biaya pengiriman: {formatRupiah(5000)} (bisa berubah tergantung
+              lokasi).
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
         </div>
       </div>
     </div>
