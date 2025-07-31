@@ -1,10 +1,14 @@
-import React, { useContext, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router";
+import React, { useEffect } from "react";
+import { Outlet, useLocation } from "react-router";
 import Navbar from "../components/Navbar";
 import DarkModeToggle from "../components/DarkModeToggle";
-import { UserContext } from "../contexts/userContext";
 
 export default function MainLayout() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-gray-800 dark:text-white transition-all duration-300">
       <Navbar />

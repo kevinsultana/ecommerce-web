@@ -6,6 +6,7 @@ import {
 } from "../../redux/features/CartSlice";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import formatRupiah from "../../utils/FormatRupiah";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart);
@@ -67,7 +68,7 @@ export default function Cart() {
               >
                 <figure className="w-32 h-32 flex-shrink-0">
                   <img
-                    src={item.imageUrl || "https://via.placeholder.com/150"}
+                    src={item.imgUrl || ""}
                     alt={item.name}
                     className="object-cover w-full h-full rounded-l-lg"
                   />
@@ -77,13 +78,13 @@ export default function Cart() {
                     {item.name}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300">
-                    ${item.price.toFixed(2)}
+                    {formatRupiah(item.price)}
                   </p>
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       className="btn btn-sm btn-circle"
                       onClick={() =>
-                        handleQuantityChange(item.id, item.quantity - 1)
+                        handleQuantityChange(item.id, Number(item.quantity) - 1)
                       }
                     >
                       -

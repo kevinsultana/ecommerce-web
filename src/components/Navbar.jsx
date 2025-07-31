@@ -52,13 +52,13 @@ export default function Navbar() {
       <div className="navbar-center hidden lg:flex">
         <ul className="flex-row items-center px-4 py-2 gap-6 menu">
           <li className="btn btn-ghost">
-            <Link>Home</Link>
+            <Link to="/">Home</Link>
           </li>
           <li className="btn btn-ghost">
-            <Link>About</Link>
+            <Link to="/about">About</Link>
           </li>
           <li className="btn btn-ghost">
-            <Link>Contact Us</Link>
+            <Link to="/contact">Contact Us</Link>
           </li>
         </ul>
       </div>
