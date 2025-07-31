@@ -1,32 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaBoxOpen,
   FaChartBar,
   FaClipboardList,
   FaShoppingCart,
 } from "react-icons/fa";
+import { db } from "../../firebase/firebase";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import Swal from "sweetalert2";
 
 export default function SellerCentre() {
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("");
   const [categories, setCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const totalProduct = filteredProducts?.length;
+
+  const totalItem = filteredProducts.reduce(
+    (total, product) => total + (product.stock || 0),
+    0
+  );
+  const totalModal = filteredProducts.reduce(
+    (total, product) => total + (product.price || 0) * (product.stock || 0),
+    0
+  );
+
   const dataCard = [
     {
       label: "Total Produk",
-      value: 100,
+      value: totalProduct,
       icon: <FaBoxOpen className="w-6 h-6" />,
     },
     {
       label: "Total Item",
-      value: 100,
+      value: Number(totalItem),
       icon: <FaClipboardList className="w-6 h-6" />,
     },
     {
       label: "Total Harga Barang",
-      // value: `Rp. ${totalModal.toLocaleString("id-ID")}`,
-      value: 100,
+      value: `Rp. ${totalModal.toLocaleString("id-ID")}`,
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
     {
@@ -35,6 +48,60 @@ export default function SellerCentre() {
       icon: <FaChartBar className="w-6 h-6" />,
     },
   ];
+
+  const getProducts = async () => {
+    setLoading(true);
+    try {
+      const querySnap = await getDocs(collection(db, "products"));
+      const products = querySnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setFilteredProducts(products);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const getCategories = async () => {
+    try {
+      const querySnap = await getDocs(collection(db, "categories"));
+      const categories = querySnap.docs.map((doc) => doc.data());
+      setCategories(categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+    getCategories();
+  }, []);
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Apakah Anda yakin?",
+      text: "Anda tidak akan bisa mengembalikan ini!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteDoc(doc(db, "products", id));
+        Swal.fire("Dihapus!", "Produk Anda telah dihapus.", "success");
+        getProducts();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Batal", "Produk Anda tidak dihapus.", "info");
+      }
+    });
+  };
+
   return (
     <div className="space-y-6 p-6 bg-white dark:bg-gray-900 min-h-screen">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
@@ -68,19 +135,22 @@ export default function SellerCentre() {
           onChange={(e) => setFilter(e.target.value)}
           className="px-4 py-2 border rounded text-sm text-black dark:bg-gray-800 dark:text-white dark:border-gray-700 space-y-3 capitalize"
         >
-          <option value="all">All Categories</option>
+          <option value="" hidden>
+            All Categories
+          </option>
           {categories.length > 0 ? (
-            categories.map((category) => (
+            categories.map((category, index) => (
               <option
                 className="capitalize"
-                key={category.id}
-                value={category.name}
+                key={index}
+                value={category.value}
+                onChange={(e) => setFilter(e.target.value)}
               >
                 {category.name}
               </option>
             ))
           ) : (
-            <option value="all">All Categories</option>
+            <option value="">All Categories</option>
           )}
         </select>
       </div>
@@ -108,7 +178,14 @@ export default function SellerCentre() {
                   colSpan="7"
                   className="text-center py-4 text-gray-500 dark:text-gray-400"
                 >
-                  {loading ? "Memuat produk..." : "Tidak ada produk ditemukan."}
+                  {loading ? (
+                    <div className="space-y-4">
+                      <span className="loading loading-spinner loading-xl text-primary"></span>
+                      <p className="text-lg">Loading</p>
+                    </div>
+                  ) : (
+                    "Tidak ada produk ditemukan."
+                  )}
                 </td>
               </tr>
             ) : (

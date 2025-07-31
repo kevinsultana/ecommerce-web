@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BiCart, BiSearch } from "react-icons/bi";
+import { BiCart } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdMenu } from "react-icons/md";
 import { useSelector } from "react-redux";

@@ -1,11 +1,8 @@
-import React, { use, useContext, useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router";
+import React, { useContext, useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router";
 import DarkModeToggle from "../components/DarkModeToggle";
 import { UserContext } from "../contexts/userContext";
-import { BiMenu } from "react-icons/bi";
-import { HiHome } from "react-icons/hi";
-import { IoAdd } from "react-icons/io5";
-import { MdMenu } from "react-icons/md";
+
 import NavbarCMS from "../components/NavbarCMS";
 import SidebarCMS from "../components/SidebarCMS";
 
