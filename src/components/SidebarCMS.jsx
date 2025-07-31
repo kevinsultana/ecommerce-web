@@ -2,6 +2,7 @@ import React from "react";
 import { BiMenu } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 import { IoAdd } from "react-icons/io5";
+import { MdDashboard } from "react-icons/md";
 import { useNavigate } from "react-router";
 
 export default function SidebarCMS({ isSideBarOpen, onClick, onClickNav }) {
@@ -42,13 +43,13 @@ export default function SidebarCMS({ isSideBarOpen, onClick, onClickNav }) {
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   }`}
         >
-          <HiHome className="h-6 w-6 flex-shrink-0" />
+          <MdDashboard className="h-6 w-6 flex-shrink-0" />
           <span
             className={`whitespace-nowrap transition-opacity duration-300 ${
               isSideBarOpen ? "opacity-100" : "lg:opacity-0 lg:hidden"
             }`}
           >
-            Home
+            Dashboard Seller
           </span>
         </button>
 
@@ -73,6 +74,30 @@ export default function SidebarCMS({ isSideBarOpen, onClick, onClickNav }) {
             }`}
           >
             Add New Product
+          </span>
+        </button>
+
+        {/* home link */}
+        <button
+          onClick={() => {
+            navigate("/");
+            if (window.innerWidth < 1024) onClickNav();
+          }}
+          className={`flex items-center gap-4 w-full p-3 rounded-lg
+                  transition-colors duration-200
+                  ${
+                    location.pathname === "/"
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  }`}
+        >
+          <HiHome className="h-6 w-6 flex-shrink-0" />
+          <span
+            className={`whitespace-nowrap transition-opacity duration-300 ${
+              isSideBarOpen ? "opacity-100" : "lg:opacity-0 lg:hidden"
+            }`}
+          >
+            Home Page
           </span>
         </button>
       </nav>

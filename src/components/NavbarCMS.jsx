@@ -9,15 +9,15 @@ export default function NavbarCMS({ onClick }) {
         <span onClick={onClick} className="btn btn-ghost flex lg:hidden">
           <MdMenu />
         </span>
-        <a className=" text-xl">Seller Dashboard</a>
+        <a className="text-xl lg:px-4">Seller Dashboard</a>
       </div>
-      <div className="flex-none">
+      {/* <div className="flex-none">
         <ul className="btn btn-ghost px-1">
           <li>
             <Link to="/">Back to Home Page</Link>
           </li>
         </ul>
-      </div>
+      </div> */}
     </nav>
   );
 }

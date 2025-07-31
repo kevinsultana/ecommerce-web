@@ -8,12 +8,15 @@ import {
 import { db } from "../../firebase/firebase";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 export default function SellerCentre() {
   const [filter, setFilter] = useState("");
   const [categories, setCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const totalProduct = filteredProducts?.length;
 
@@ -42,11 +45,11 @@ export default function SellerCentre() {
       value: `Rp. ${totalModal.toLocaleString("id-ID")}`,
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
-    {
-      label: "Total Pesanan",
-      value: 100,
-      icon: <FaChartBar className="w-6 h-6" />,
-    },
+    // {
+    //   label: "Total Pesanan",
+    //   value: 100,
+    //   icon: <FaChartBar className="w-6 h-6" />,
+    // },
   ];
 
   const getProducts = async () => {
@@ -102,6 +105,10 @@ export default function SellerCentre() {
     });
   };
 
+  const handleEdit = (id) => {
+    navigate("edit-product/" + id, { replace: true });
+  };
+
   return (
     <div className="space-y-6 p-6 bg-white dark:bg-gray-900 min-h-screen">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
@@ -109,7 +116,7 @@ export default function SellerCentre() {
       </h1>
 
       {/* Card Dashboard */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {dataCard.map((item, i) => (
           <div
             key={i}
