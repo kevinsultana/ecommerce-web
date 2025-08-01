@@ -18,6 +18,7 @@ import formatAngka from "../../utils/FormatAngka";
 export default function SellerCentre() {
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -70,6 +71,15 @@ export default function SellerCentre() {
       q = query(q, where("category", "==", filter));
     }
 
+    if (searchQuery) {
+      const endKeyword = searchQuery + "\uf8ff";
+      q = query(
+        q,
+        where("name", ">=", searchQuery),
+        where("name", "<=", endKeyword)
+      );
+    }
+
     if (sort) {
       const [field, direction] = sort.split("-");
       q = query(q, orderBy(field, direction));
@@ -105,8 +115,12 @@ export default function SellerCentre() {
   }, []);
 
   useEffect(() => {
-    fetchProducts();
-  }, [filter, sort]);
+    const debounce = setTimeout(() => {
+      fetchProducts();
+    }, 500);
+
+    return () => clearTimeout(debounce);
+  }, [filter, sort, searchQuery]);
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -164,6 +178,7 @@ export default function SellerCentre() {
             type="text"
             placeholder="Cari Produk"
             className="px-4 py-2 border rounded text-sm text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <select
