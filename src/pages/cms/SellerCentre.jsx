@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FaBoxOpen, FaClipboardList, FaShoppingCart } from "react-icons/fa";
 import { db } from "../../firebase/firebase";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
@@ -9,6 +17,7 @@ import formatAngka from "../../utils/FormatAngka";
 
 export default function SellerCentre() {
   const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState("");
   const [categories, setCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,9 +25,8 @@ export default function SellerCentre() {
   const navigate = useNavigate();
 
   const totalProduct = filteredProducts?.length;
-
   const totalItem = filteredProducts.reduce(
-    (total, product) => total + (product.stock || 0),
+    (total, product) => Number(total) + Number(product.stock || 0),
     0
   );
   const totalModal = filteredProducts.reduce(
@@ -44,28 +52,39 @@ export default function SellerCentre() {
     },
     {
       label: "Jumlah Pesanan",
-      value: 1,
+      value: 13,
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
     {
       label: "Barang terkirim",
-      value: 10,
+      value: 103,
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
   ];
 
-  const getProducts = async () => {
+  const fetchProducts = async () => {
     setLoading(true);
+    let q = collection(db, "products");
+
+    if (filter) {
+      q = query(q, where("category", "==", filter));
+    }
+
+    if (sort) {
+      const [field, direction] = sort.split("-");
+      q = query(q, orderBy(field, direction));
+    }
+
     try {
-      const querySnap = await getDocs(collection(db, "products"));
+      const querySnap = await getDocs(q);
       const products = querySnap.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setFilteredProducts(products);
-      setLoading(false);
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -81,9 +100,13 @@ export default function SellerCentre() {
   };
 
   useEffect(() => {
-    getProducts();
+    fetchProducts();
     getCategories();
   }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [filter, sort]);
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -99,9 +122,7 @@ export default function SellerCentre() {
       if (result.isConfirmed) {
         await deleteDoc(doc(db, "products", id));
         Swal.fire("Dihapus!", "Produk Anda telah dihapus.", "success");
-        getProducts();
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        getProducts();
+        fetchProducts(); // Panggil fetchProducts yang sudah diperbarui
       }
     });
   };
@@ -136,24 +157,24 @@ export default function SellerCentre() {
         ))}
       </div>
 
-      {/* Search & Filter  */}
-      <div className="flex flex-wrap items-center gap-4 mt-4">
+      {/* Search & Filter */}
+      <div className="flex items-center justify-center gap-4 py-6">
+        <div>
+          <input
+            type="text"
+            placeholder="Cari Produk"
+            className="px-4 py-2 border rounded text-sm text-black dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          />
+        </div>
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="px-4 py-2 border rounded text-sm text-black dark:bg-gray-800 dark:text-white dark:border-gray-700 space-y-3 capitalize"
         >
-          <option value="" hidden>
-            All Categories
-          </option>
+          <option value="">All Categories</option>
           {categories.length > 0 ? (
             categories.map((category, index) => (
-              <option
-                className="capitalize"
-                key={index}
-                value={category.value}
-                onChange={(e) => setFilter(e.target.value)}
-              >
+              <option key={index} value={category.value}>
                 {category.name}
               </option>
             ))
@@ -161,6 +182,29 @@ export default function SellerCentre() {
             <option value="">All Categories</option>
           )}
         </select>
+
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="px-4 py-2 border rounded text-sm text-black dark:bg-gray-800 dark:text-white dark:border-gray-700 space-y-3 capitalize"
+        >
+          <option value="">Sort By</option>
+          <option value="price-desc">Price : Low to High</option>
+          <option value="price-asc">Price : High to Low</option>
+          <option value="stock-asc">Stock : Low to High</option>
+          <option value="stock-desc">Stock : High to Low</option>
+          <option value="name-asc">Name : A to Z</option>
+          <option value="name-desc">Name : Z to A</option>
+        </select>
+        <button
+          onClick={() => {
+            setFilter("");
+            setSort("");
+          }}
+          className="btn bg-red-500 text-white"
+        >
+          Reset
+        </button>
       </div>
 
       {/* Table Item */}
@@ -180,20 +224,25 @@ export default function SellerCentre() {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.length === 0 ? (
+            {loading ? (
               <tr>
                 <td
                   colSpan="7"
                   className="text-center py-4 text-gray-500 dark:text-gray-400"
                 >
-                  {loading ? (
-                    <div className="space-y-4">
-                      <span className="loading loading-spinner loading-xl text-primary"></span>
-                      <p className="text-lg">Loading</p>
-                    </div>
-                  ) : (
-                    "Tidak ada produk ditemukan."
-                  )}
+                  <div className="space-y-4">
+                    <div className="loading loading-spinner loading-xl text-primary mx-auto"></div>
+                    <p className="text-lg">Loading</p>
+                  </div>
+                </td>
+              </tr>
+            ) : filteredProducts.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="7"
+                  className="text-center py-4 text-gray-500 dark:text-gray-400"
+                >
+                  Tidak ada produk ditemukan.
                 </td>
               </tr>
             ) : (

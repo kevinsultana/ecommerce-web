@@ -40,6 +40,8 @@ export default function ProductDetail() {
     dispatch(addToCart({ ...product, quantity }));
   };
 
+  const handleBuyNow = () => {};
+
   useEffect(() => {
     getDataProduct();
   }, []);
@@ -158,7 +160,7 @@ export default function ProductDetail() {
                 }}
                 className="w-16 text-center bg-transparent border-x border-gray-300 dark:border-gray-600 focus:outline-none text-lg"
                 min="1"
-                max={product.stock || 9999}
+                max={product.stock}
               />
               <button
                 onClick={handleIncreaseQuantity}
@@ -183,7 +185,7 @@ export default function ProductDetail() {
               Tambahkan ke Keranjang
             </button>
             <button
-              // onClick={handleBuyNow}
+              onClick={handleBuyNow}
               className="flex-1 btn btn-outline btn-secondary text-lg py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             >
               Beli Sekarang
