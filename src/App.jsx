@@ -13,6 +13,8 @@ import EditProduct from "./pages/cms/EditProduct";
 import Cart from "./pages/home/Cart";
 import UserProfile from "./pages/home/UserProfile";
 import { UserProvider } from "./contexts/userContext";
+import About from "./pages/home/About";
+import ContactUs from "./pages/home/ContactUs";
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
             <Route path="product/:id" element={<ProductDetail />} />
             <Route path="cart" element={<Cart />} />
             <Route path="profile" element={<UserProfile />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<ContactUs />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>

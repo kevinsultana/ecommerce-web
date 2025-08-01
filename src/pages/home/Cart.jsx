@@ -70,7 +70,10 @@ export default function Cart() {
                 key={item.id}
                 className="card card-side bg-base-100 shadow-xl dark:bg-gray-800 items-center"
               >
-                <figure className="w-32 h-32 flex-shrink-0">
+                <figure
+                  className="w-32 h-32 flex-shrink-0 cursor-pointer"
+                  onClick={() => navigate(`/product/${item.id}`)}
+                >
                   <img
                     src={item.imgUrl || ""}
                     alt={item.name}

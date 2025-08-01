@@ -215,6 +215,7 @@ export default function SellerCentre() {
           onClick={() => {
             setFilter("");
             setSort("");
+            setSearchQuery("");
           }}
           className="btn bg-red-500 text-white"
         >
