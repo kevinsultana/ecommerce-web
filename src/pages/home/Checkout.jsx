@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import formatRupiah from "../../utils/FormatRupiah";
 import Swal from "sweetalert2";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  writeBatch,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useNavigate } from "react-router";
 import { deleteCart } from "../../redux/features/CartSlice";
@@ -31,30 +37,63 @@ export default function Checkout() {
   };
   // console.log(pesanan);
   const handleCheckout = async () => {
-    if (!alamatLengkap || !namaLengkap || !noHp || !pesan) {
+    if (!alamatLengkap || !namaLengkap || !noHp) {
       return Swal.fire({
         icon: "warning",
         title: "Lengkapi semua data!",
         text: "Mohon isi semua form pengiriman dan pesan.",
       });
     }
+
     try {
       setLoading(true);
-      const res = await addDoc(collection(db, "pesanan"), pesanan);
+
+      const batch = writeBatch(db); // gunakan batch biar aman dan atomik
+
+      // Loop dan kurangi stok produk
+      for (const item of cartItems) {
+        const productRef = doc(db, "products", item.id);
+        const productSnap = await getDoc(productRef);
+
+        if (!productSnap.exists()) {
+          throw new Error(`Produk dengan ID ${item.id} tidak ditemukan.`);
+        }
+
+        const currentStock = productSnap.data().stock;
+
+        if (currentStock < item.quantity) {
+          throw new Error(`Stok ${item.name} tidak mencukupi.`);
+        }
+
+        batch.update(productRef, {
+          stock: currentStock - item.quantity,
+        });
+      }
+
+      // Simpan pesanan
+      await addDoc(collection(db, "pesanan"), {
+        ...pesanan,
+        status: "pending",
+        createdAt: new Date(),
+      });
+
+      // Commit semua update stok sekaligus
+      await batch.commit();
+
       Swal.fire({
         icon: "success",
         title: "Pesanan berhasil dibuat!",
         text: "Kami akan segera memproses pesananmu.",
       }).then(() => {
-        navigate("/");
         dispatch(deleteCart());
+        navigate("/");
       });
     } catch (error) {
       console.error(error);
       Swal.fire({
         icon: "error",
         title: "Gagal",
-        text: "Terjadi kesalahan saat menyimpan pesanan.",
+        text: error.message || "Terjadi kesalahan saat memproses pesanan.",
       });
     } finally {
       setLoading(false);
