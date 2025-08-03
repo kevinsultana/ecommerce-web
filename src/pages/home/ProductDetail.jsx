@@ -72,22 +72,20 @@ export default function ProductDetail() {
                   className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-md border-2 border-transparent hover:border-blue-500 cursor-pointer transition-all duration-200"
                   onClick={() =>
                     setProduct((prev) => ({ ...prev, imgUrl: img }))
-                  } // Ganti gambar utama saat thumbnail diklik
+                  }
                 />
               ))}
             </div>
           )}
         </div>
 
-        {/* Kolom Kanan: Detail Produk */}
         <div className="w-full lg:w-3/5 space-y-6">
           {/* Nama Produk */}
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight">
             {product.name || "Nama Produk Tidak Tersedia"}
           </h1>
 
-          {/* Rating dan Penjualan */}
-          <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+          {/* <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
             {product.rating && (
               <div className="flex items-center gap-1">
                 <FaStar className="text-yellow-400" />
@@ -106,28 +104,13 @@ export default function ProductDetail() {
                 <span>{product.sold} Terjual</span>
               </>
             )}
-          </div>
+          </div> */}
 
           {/* Harga */}
           <div className="flex items-baseline gap-3">
-            {product.originalPrice && product.originalPrice > product.price && (
-              <span className="text-gray-500 dark:text-gray-400 line-through text-xl md:text-2xl">
-                {formatRupiah(product.originalPrice)}
-              </span>
-            )}
             <span className="text-red-600 dark:text-red-400 text-3xl md:text-5xl font-bold">
               {formatRupiah(product.price)}
             </span>
-            {product.originalPrice && product.originalPrice > product.price && (
-              <span className="text-red-600 dark:text-red-400 text-lg md:text-xl font-semibold">
-                {(
-                  ((product.originalPrice - product.price) /
-                    product.originalPrice) *
-                  100
-                ).toFixed(0)}
-                % OFF
-              </span>
-            )}
           </div>
 
           {/* Divider */}
@@ -217,7 +200,7 @@ export default function ProductDetail() {
               Estimasi tiba: 3-5 hari kerja.
             </p>
             <p className="text-gray-600 dark:text-gray-300">
-              Biaya pengiriman: {formatRupiah(5000)} (bisa berubah tergantung
+              Biaya pengiriman: {formatRupiah(15000)} (bisa berubah tergantung
               lokasi).
             </p>
           </div>

@@ -18,7 +18,10 @@ export const UserProvider = ({ children }) => {
         setUser(user);
         const docSnapRef = await getDoc(doc(db, "users", user.uid));
         if (docSnapRef.exists()) {
-          const userData = docSnapRef.data();
+          const userData = {
+            ...docSnapRef.data(),
+            id: user.uid,
+          };
           setUserRole(userData.role);
           setUserData(userData);
         } else {

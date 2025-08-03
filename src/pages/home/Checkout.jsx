@@ -16,7 +16,7 @@ import { UserContext } from "../../contexts/userContext";
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.cart);
-  const { user } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const [alamatLengkap, setAlamatLengkap] = useState("");
   const [namaLengkap, setNamaLengkap] = useState("");
   const [noHp, setNoHp] = useState("");
@@ -36,7 +36,8 @@ export default function Checkout() {
     namaLengkap,
     noHp,
     pesan,
-    userId: user.uid,
+    userId: userData.id,
+    userData: userData,
     status: "pending",
     createdAt: new Date(),
   };

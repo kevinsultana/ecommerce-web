@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   FaBoxOpen,
+  FaCheck,
   FaClipboardList,
   FaShoppingCart,
   FaTruck,
@@ -69,6 +70,11 @@ export default function SellerCentre() {
       label: "Pesanan Terkirim",
       value: orders.filter((order) => order.status === "terkirim").length,
       icon: <FaTruck className="w-6 h-6" />,
+    },
+    {
+      label: "Pesanan Selesai",
+      value: orders.filter((order) => order.status === "selesai").length,
+      icon: <FaCheck className="w-6 h-6" />,
     },
   ];
 
@@ -155,7 +161,7 @@ export default function SellerCentre() {
       if (result.isConfirmed) {
         await deleteDoc(doc(db, "products", id));
         Swal.fire("Dihapus!", "Produk Anda telah dihapus.", "success");
-        fetchProducts(); // Panggil fetchProducts yang sudah diperbarui
+        fetchProducts();
       }
     });
   };
@@ -171,12 +177,14 @@ export default function SellerCentre() {
       </h1>
 
       {/* Card Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {dataCard.map((item, i) => (
           <div
             key={i}
             onClick={item.path ? () => navigate(item.path) : null}
-            className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-md flex flex-col items-center transition-all duration-300 ease-in-out"
+            className={`bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-md flex flex-col items-center transition-all duration-300 ease-in-out ${
+              item.path ? "cursor-pointer" : ""
+            }`}
           >
             <div className="text-indigo-600 dark:text-indigo-400 mb-2">
               {item.icon}
