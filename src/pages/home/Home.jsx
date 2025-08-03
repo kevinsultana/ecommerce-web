@@ -26,50 +26,68 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen p-4">
-      <div className="flex items-center justify-center p-8 mb-8 bg-gray-100 rounded-lg dark:bg-gray-700 text-gray-800 dark:text-white">
-        <div className="text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Selamat Datang di Toko Kami!</h1>
-            <p className="py-6">
-              Temukan berbagai produk menarik dengan harga terbaik. Selamat
-              berbelanja!
-            </p>
-            <button className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Lihat Produk
-            </button>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen px-4 py-8 bg-white dark:bg-gray-800 text-gray-800 dark:text-white transition-all duration-300">
+      {/* Hero Section */}
+      <section className="text-center bg-indigo-50 dark:bg-gray-900 rounded-2xl p-10 mb-10 shadow">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Selamat Datang di Toko Kami!
+        </h1>
+        <p className="text-lg mb-6">
+          Temukan berbagai produk menarik dengan harga terbaik. Selamat
+          berbelanja!
+        </p>
+        <button
+          onClick={() => {
+            document
+              .getElementById("produk-unggulan")
+              ?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="px-6 py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
+        >
+          Lihat Produk
+        </button>
+      </section>
 
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
-        Produk Unggulan
-      </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 px-10">
-        {products.map((item) => (
-          <div
-            key={item.id}
-            className="cursor-pointer hover:scale-105 transition duration-300 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md"
-            onClick={() => navigate(`/product/${item.id}`)}
-          >
-            <div className="w-full h-48 overflow-hidden border rounded-md border-gray-300 dark:border-gray-900">
-              <img
-                src={item.imgUrl}
-                alt={item.name}
-                className="w-full h-full object-contain rounded-lg shadow-md"
-              />
-            </div>
-            <h3 className="text-lg font-semibold mt-2">{item.name}</h3>
-            <div className="py-2"></div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold">
-                {formatRupiah(item.price)}
-              </span>
-              <span className="text-sm text-gray-500">terjual</span>
-            </div>
+      {/* Produk Unggulan */}
+      <section id="produk-unggulan">
+        <h2 className="text-3xl font-bold mb-6 text-center">Produk Unggulan</h2>
+        {products.length === 0 ? (
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            Belum ada produk tersedia.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {products.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white dark:bg-gray-700 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer"
+                onClick={() => navigate(`/product/${item.id}`)}
+              >
+                <div className="w-full h-48 overflow-hidden rounded-t-xl bg-gray-100 dark:bg-gray-700">
+                  <img
+                    src={item.imgUrl}
+                    alt={item.name}
+                    className="w-full h-full object-contain p-2"
+                  />
+                </div>
+                <div className="p-4 space-y-2">
+                  <h3 className="text-md font-semibold truncate">
+                    {item.name}
+                  </h3>
+                  <div className="flex justify-between items-center">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-bold">
+                      {formatRupiah(item.price)}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Terjual: {item.sold ?? 0}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        )}
+      </section>
     </div>
   );
 }

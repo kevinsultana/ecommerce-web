@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { addToCart } from "../../redux/features/CartSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import formatRupiah from "../../utils/FormatRupiah";
 import { FaShippingFast } from "react-icons/fa";
 import { FaShop } from "react-icons/fa6";
+import { UserContext } from "../../contexts/userContext";
+import Swal from "sweetalert2";
 
 export default function ProductDetail() {
   const params = useParams();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const getDataProduct = async () => {
     try {
@@ -37,10 +41,33 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = () => {
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Anda harus login terlebih dahulu!",
+      }).then(() => {
+        navigate("/auth/login");
+      });
+      return;
+    }
     dispatch(addToCart({ ...product, quantity }));
   };
 
-  const handleBuyNow = () => {};
+  const handleBuyNow = () => {
+    if (!user) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Anda harus login terlebih dahulu!",
+      }).then(() => {
+        navigate("/auth/login");
+      });
+      return;
+    }
+    dispatch(addToCart({ ...product, quantity }));
+    navigate("/checkout", { replace: true });
+  };
 
   useEffect(() => {
     getDataProduct();

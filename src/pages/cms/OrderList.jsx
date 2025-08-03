@@ -9,8 +9,6 @@ export default function OrderList() {
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(orderList);
-
   const getOrderlistData = async () => {
     try {
       const res = await getDocs(collection(db, "pesanan"));

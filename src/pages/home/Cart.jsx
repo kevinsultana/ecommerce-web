@@ -32,11 +32,11 @@ export default function Cart() {
     });
   };
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/auth/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/auth/login");
+  //   }
+  // }, []);
 
   const handleQuantityChange = (id, newQuantity) => {
     const quantity = Number(newQuantity);

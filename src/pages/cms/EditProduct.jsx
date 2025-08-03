@@ -119,8 +119,6 @@ export default function EditProduct() {
     }
   };
 
-  // console.log(product);
-
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow space-y-6">
       <div className="flex items-center gap-3">
