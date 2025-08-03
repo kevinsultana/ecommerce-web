@@ -1,6 +1,11 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import formatRupiah from "../../utils/FormatRupiah";
+import Swal from "sweetalert2";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { useNavigate } from "react-router";
+import { deleteCart } from "../../redux/features/CartSlice";
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.cart);
@@ -8,11 +13,15 @@ export default function Checkout() {
   const [namaLengkap, setNamaLengkap] = useState("");
   const [noHp, setNoHp] = useState("");
   const [pesan, setPesan] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const pesanan = {
     item: cartItems,
     total: cartItems.reduce(
-      (total, item) => total + item.quantity * item.price,
+      (total, item) => total + 15000 + item.quantity * item.price,
       0
     ),
     alamatLengkap,
@@ -21,12 +30,48 @@ export default function Checkout() {
     pesan,
   };
   // console.log(pesanan);
+  const handleCheckout = async () => {
+    if (!alamatLengkap || !namaLengkap || !noHp || !pesan) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Lengkapi semua data!",
+        text: "Mohon isi semua form pengiriman dan pesan.",
+      });
+    }
+    try {
+      setLoading(true);
+      const res = await addDoc(collection(db, "pesanan"), pesanan);
+      Swal.fire({
+        icon: "success",
+        title: "Pesanan berhasil dibuat!",
+        text: "Kami akan segera memproses pesananmu.",
+      }).then(() => {
+        navigate("/");
+        dispatch(deleteCart());
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Terjadi kesalahan saat menyimpan pesanan.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="space-y-4 pb-10">
       <h1 className="text-2xl font-bold my-4 text-center">Checkout Produk</h1>
       <div className="border p-4 rounded-2xl bg-gray-100 dark:bg-gray-700 space-y-4">
-        <h2 className="text-lg font-bold">Alamat pengiriman</h2>
+        <h2 className="text-lg font-bold">Alamat Pengiriman</h2>
         <div className="flex flex-col gap-4 ">
           <label>Alamat lengkap</label>
           <input
@@ -121,7 +166,9 @@ export default function Checkout() {
           </h3>
         </div>
         <div className="flex justify-end pr-40 pt-6">
-          <button className="btn btn-primary">Buat Pesanan</button>
+          <button onClick={handleCheckout} className="btn btn-primary">
+            {loading ? <span className="loading"></span> : "Buat Pesanan"}
+          </button>
         </div>
       </div>
     </div>
