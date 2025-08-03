@@ -31,9 +31,10 @@ export default function Navbar() {
       navigate("/auth/login");
     }
   };
+  console.log(userData);
 
   return (
-    <div className="navbar bg-gray-100 shadow-md dark:bg-gray-700 dark:text-white">
+    <div className="navbar lg:px-6 bg-gray-100 shadow-md dark:bg-gray-700 dark:text-white">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -89,9 +90,25 @@ export default function Navbar() {
                 )}
           </div>
         </button>
-        <button onClick={handleProfileClick} className="btn btn-ghost">
-          <CgProfile className="h-6 w-6" />
-          <span className="hidden md:inline">
+        <button
+          onClick={handleProfileClick}
+          className="btn btn-ghost space-x-2"
+        >
+          {userData?.photoProfile !== "" ? (
+            <img
+              src={userData?.photoProfile}
+              alt="profile"
+              className="h-6 w-6 rounded-full"
+            />
+          ) : (
+            <img
+              src="/img/userPlaceholder.png"
+              alt="profile"
+              className="h-6 w-6"
+            />
+          )}
+          {/* <CgProfile className="h-6 w-6" /> */}
+          <span className="hidden md:inline capitalize ">
             {userData?.userName || "Login Here"}
           </span>
         </button>

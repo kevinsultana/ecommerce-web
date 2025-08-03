@@ -52,6 +52,11 @@ export default function ProductDetail() {
       return;
     }
     dispatch(addToCart({ ...product, quantity }));
+    Swal.fire(
+      "Berhasil",
+      "Produk berhasil ditambahkan ke keranjang!",
+      "success"
+    );
   };
 
   const handleBuyNow = () => {

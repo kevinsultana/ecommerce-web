@@ -94,7 +94,7 @@ export default function OrderList() {
                 <img
                   src={
                     order?.userData?.photoProfile === ""
-                      ? "/src/assets/img/userPlaceholder.png"
+                      ? "/img/userPlaceholder.png"
                       : order?.userData?.photoProfile
                   }
                   alt={order?.userData?.userName}

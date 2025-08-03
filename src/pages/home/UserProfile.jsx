@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { auth } from "../../firebase/firebase";
 
 export default function UserProfile() {
-  const { user, userRole, loading } = useContext(UserContext);
+  const { user, userRole, loading, userData } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -23,10 +23,22 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen p-4 flex items-center justify-center">
+    <div className="p-4 flex items-center justify-center">
       <div className="card w-full max-w-lg shadow-xl bg-slate-100 dark:bg-gray-700 text-gray-900 dark:text-white">
         <div className="card-body items-center text-center">
-          <CgProfile className="h-24 w-24 mb-4 text-primary" />
+          {userData?.photoProfile !== "" ? (
+            <img
+              src={userData?.photoProfile}
+              alt="profile"
+              className="h-32 w-32 rounded-full"
+            />
+          ) : (
+            <img
+              src="/img/userPlaceholder.png"
+              alt="profile"
+              className="h-32 w-32"
+            />
+          )}
           <h2 className="card-title text-3xl font-bold mb-2">
             Profil Pengguna
           </h2>
@@ -39,7 +51,7 @@ export default function UserProfile() {
               {userRole || "User"}
             </span>
           </p>
-          <div className="card-actions">
+          <div className="grid grid-cols-2 gap-x-2">
             <Link
               to="/profile/edit"
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
@@ -48,7 +60,7 @@ export default function UserProfile() {
             </Link>
             <Link
               to="/purchase"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
             >
               Pesanan Saya
             </Link>

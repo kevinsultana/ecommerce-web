@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
@@ -7,13 +7,11 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
-import { UserContext } from "../../contexts/userContext";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
 
   const handleRemove = (id) => {
     Swal.fire({
@@ -32,12 +30,6 @@ export default function Cart() {
     });
   };
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/auth/login");
-  //   }
-  // }, []);
-
   const handleQuantityChange = (id, newQuantity) => {
     const quantity = Number(newQuantity);
     const totalProduct = cartItems.find((item) => item.id === id)?.stock || 0;
@@ -50,6 +42,8 @@ export default function Cart() {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  const totalQty = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="min-h-screen p-4">
@@ -132,10 +126,12 @@ export default function Cart() {
           {/* Ringkasan Pesanan */}
           <div className="w-full lg:w-1/3 card bg-base-100 shadow-xl dark:bg-gray-800 p-6 self-start sticky top-4">
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-              Ringkasan Pesanan
+              Ringkasan Pesanan ({cartItems.length} Produk)
             </h2>
             <div className="flex justify-between text-lg mb-2">
-              <span className="dark:text-gray-300">Subtotal:</span>
+              <span className="dark:text-gray-300">
+                Subtotal ({totalQty} item) :{" "}
+              </span>
               <span className="font-semibold dark:text-white">
                 {formatRupiah(totalHarga)}
               </span>
