@@ -12,6 +12,8 @@ export default function Cart() {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const allItems = { cartItems };
+  // console.log(allItems);
 
   const handleRemove = (id) => {
     Swal.fire({
@@ -145,7 +147,10 @@ export default function Cart() {
               <span>Total:</span>
               <span>{formatRupiah(totalHarga + 15000)}</span>
             </div>
-            <button className="btn btn-primary w-full">
+            <button
+              onClick={() => navigate("/checkout")}
+              className="btn btn-primary w-full"
+            >
               Lanjutkan ke Pembayaran
             </button>
           </div>

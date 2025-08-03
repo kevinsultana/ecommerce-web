@@ -11,8 +11,6 @@ export default function Navbar() {
   const { userData } = useContext(UserContext);
   const navigate = useNavigate();
 
-  console.log(cartItems);
-
   const totalProduk = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
