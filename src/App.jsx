@@ -16,6 +16,7 @@ import { UserProvider } from "./contexts/userContext";
 import About from "./pages/home/About";
 import ContactUs from "./pages/home/ContactUs";
 import Checkout from "./pages/home/Checkout";
+import UserPurchase from "./pages/home/UserPurchase";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="purchase" element={<UserPurchase />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>

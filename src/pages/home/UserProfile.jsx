@@ -60,6 +60,12 @@ export default function UserProfile() {
             >
               Edit Profil
             </Link>
+            <Link
+              to="/purchase"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-8 transition-all duration-300"
+            >
+              Pesanan Saya
+            </Link>
             {userRole === "admin" && (
               <Link
                 to="/seller"

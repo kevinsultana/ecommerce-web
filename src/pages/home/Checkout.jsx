@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import formatRupiah from "../../utils/FormatRupiah";
 import Swal from "sweetalert2";
@@ -12,9 +12,11 @@ import {
 import { db } from "../../firebase/firebase";
 import { useNavigate } from "react-router";
 import { deleteCart } from "../../redux/features/CartSlice";
+import { UserContext } from "../../contexts/userContext";
 
 export default function Checkout() {
   const cartItems = useSelector((state) => state.cart);
+  const { user } = useContext(UserContext);
   const [alamatLengkap, setAlamatLengkap] = useState("");
   const [namaLengkap, setNamaLengkap] = useState("");
   const [noHp, setNoHp] = useState("");
@@ -34,8 +36,11 @@ export default function Checkout() {
     namaLengkap,
     noHp,
     pesan,
+    userId: user.uid,
+    status: "pending",
+    createdAt: new Date(),
   };
-  // console.log(pesanan);
+
   const handleCheckout = async () => {
     if (!alamatLengkap || !namaLengkap || !noHp) {
       return Swal.fire({
@@ -48,9 +53,8 @@ export default function Checkout() {
     try {
       setLoading(true);
 
-      const batch = writeBatch(db); // gunakan batch biar aman dan atomik
+      const batch = writeBatch(db);
 
-      // Loop dan kurangi stok produk
       for (const item of cartItems) {
         const productRef = doc(db, "products", item.id);
         const productSnap = await getDoc(productRef);
@@ -70,14 +74,10 @@ export default function Checkout() {
         });
       }
 
-      // Simpan pesanan
       await addDoc(collection(db, "pesanan"), {
         ...pesanan,
-        status: "pending",
-        createdAt: new Date(),
       });
 
-      // Commit semua update stok sekaligus
       await batch.commit();
 
       Swal.fire({
@@ -86,7 +86,7 @@ export default function Checkout() {
         text: "Kami akan segera memproses pesananmu.",
       }).then(() => {
         dispatch(deleteCart());
-        navigate("/");
+        navigate("/", { replace: true });
       });
     } catch (error) {
       console.error(error);

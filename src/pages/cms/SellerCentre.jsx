@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaBoxOpen, FaClipboardList, FaShoppingCart } from "react-icons/fa";
+import {
+  FaBoxOpen,
+  FaClipboardList,
+  FaShoppingCart,
+  FaTruck,
+} from "react-icons/fa";
 import { db } from "../../firebase/firebase";
 import {
   collection,
@@ -14,6 +19,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
 import formatAngka from "../../utils/FormatAngka";
+import { FaMoneyBill } from "react-icons/fa6";
 
 export default function SellerCentre() {
   const [filter, setFilter] = useState("");
@@ -22,6 +28,8 @@ export default function SellerCentre() {
   const [categories, setCategories] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [orders, setOrders] = useState([]);
 
   const navigate = useNavigate();
 
@@ -49,17 +57,17 @@ export default function SellerCentre() {
     {
       label: "Total Harga Barang",
       value: formatRupiah(totalModal),
+      icon: <FaMoneyBill className="w-6 h-6" />,
+    },
+    {
+      label: "Pesanan Baru",
+      value: orders.filter((order) => order.status === "pending").length,
       icon: <FaShoppingCart className="w-6 h-6" />,
     },
     {
-      label: "Jumlah Pesanan",
-      value: 13,
-      icon: <FaShoppingCart className="w-6 h-6" />,
-    },
-    {
-      label: "Barang terkirim",
-      value: 103,
-      icon: <FaShoppingCart className="w-6 h-6" />,
+      label: "Pesanan Terkirim",
+      value: orders.filter((order) => order.status === "terkirim").length,
+      icon: <FaTruck className="w-6 h-6" />,
     },
   ];
 
@@ -109,9 +117,19 @@ export default function SellerCentre() {
     }
   };
 
+  const fetchOrders = async () => {
+    try {
+      const res = await getDocs(collection(db, "pesanan"));
+      setOrders(res.docs.map((doc) => doc.data()));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
     getCategories();
+    fetchOrders();
   }, []);
 
   useEffect(() => {
