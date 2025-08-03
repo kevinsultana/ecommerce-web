@@ -11,7 +11,7 @@ export default function AddNewProduct() {
     name: "",
     description: "",
     price: "",
-    image: "",
+    imgUrl: "",
     category: "",
     stock: "",
   });

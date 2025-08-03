@@ -17,6 +17,7 @@ import About from "./pages/home/About";
 import ContactUs from "./pages/home/ContactUs";
 import Checkout from "./pages/home/Checkout";
 import UserPurchase from "./pages/home/UserPurchase";
+import OrderList from "./pages/cms/OrderList";
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/seller" element={<CmsLayout />}>
             <Route index element={<SellerCentre />} />
             <Route path="new-product" element={<AddNewProduct />} />
+            <Route path="order-list" element={<OrderList />} />
             <Route path="edit-product/:id" element={<EditProduct />} />
           </Route>
         </Routes>

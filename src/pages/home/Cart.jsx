@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
@@ -7,11 +7,13 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
+import { UserContext } from "../../contexts/userContext";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   // const allItems = { cartItems };
   // console.log(allItems);
 
@@ -31,6 +33,12 @@ export default function Cart() {
       }
     });
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth/login");
+    }
+  }, []);
 
   const handleQuantityChange = (id, newQuantity) => {
     const quantity = Number(newQuantity);

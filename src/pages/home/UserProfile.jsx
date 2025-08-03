@@ -22,20 +22,6 @@ export default function UserProfile() {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
-        <p className="text-lg text-red-500">Anda tidak login.</p>
-        <button
-          onClick={() => navigate("/auth/login")}
-          className="btn btn-primary"
-        >
-          Login Here
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen p-4 flex items-center justify-center">
       <div className="card w-full max-w-lg shadow-xl bg-slate-100 dark:bg-gray-700 text-gray-900 dark:text-white">

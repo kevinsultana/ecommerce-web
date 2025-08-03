@@ -63,6 +63,7 @@ export default function SellerCentre() {
       label: "Pesanan Baru",
       value: orders.filter((order) => order.status === "pending").length,
       icon: <FaShoppingCart className="w-6 h-6" />,
+      path: "order-list",
     },
     {
       label: "Pesanan Terkirim",
@@ -174,7 +175,8 @@ export default function SellerCentre() {
         {dataCard.map((item, i) => (
           <div
             key={i}
-            className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-md flex flex-col items-center transition"
+            onClick={item.path ? () => navigate(item.path) : null}
+            className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-md flex flex-col items-center transition-all duration-300 ease-in-out"
           >
             <div className="text-indigo-600 dark:text-indigo-400 mb-2">
               {item.icon}
@@ -182,7 +184,7 @@ export default function SellerCentre() {
             <h2 className="text-sm text-gray-600 dark:text-gray-300">
               {item.label}
             </h2>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {item.value}
             </p>
           </div>

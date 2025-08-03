@@ -24,6 +24,14 @@ export default function Navbar() {
     }
   };
 
+  const handleCartClick = () => {
+    if (userData) {
+      navigate("/cart");
+    } else {
+      navigate("/auth/login");
+    }
+  };
+
   return (
     <div className="navbar bg-gray-100 shadow-md dark:bg-gray-700 dark:text-white">
       <div className="navbar-start">
@@ -69,7 +77,7 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-end space-x-2">
-        <Link to="/cart" className="btn btn-ghost btn-circle">
+        <button onClick={handleCartClick} className="btn btn-ghost btn-circle">
           <div className="indicator">
             <BiCart className="h-6 w-6" />
             {userData === null
@@ -80,7 +88,7 @@ export default function Navbar() {
                   </span>
                 )}
           </div>
-        </Link>
+        </button>
         <button onClick={handleProfileClick} className="btn btn-ghost">
           <CgProfile className="h-6 w-6" />
           <span className="hidden md:inline">
