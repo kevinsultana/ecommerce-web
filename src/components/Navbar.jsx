@@ -96,7 +96,7 @@ export default function Navbar() {
         >
           {userData?.photoProfile !== "" ? (
             <img
-              src={userData?.photoProfile}
+              src={userData?.photoProfile || "/img/userPlaceholder.png"}
               alt="profile"
               className="h-6 w-6 rounded-full"
             />

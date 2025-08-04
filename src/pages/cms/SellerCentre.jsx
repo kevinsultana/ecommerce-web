@@ -232,8 +232,8 @@ export default function SellerCentre() {
           className="px-4 py-2 border rounded text-sm text-black dark:bg-gray-800 dark:text-white dark:border-gray-700 space-y-3 capitalize"
         >
           <option value="">Sort By</option>
-          <option value="price-desc">Price : Low to High</option>
-          <option value="price-asc">Price : High to Low</option>
+          <option value="price-asc">Price : Low to High</option>
+          <option value="price-desc">Price : High to Low</option>
           <option value="stock-asc">Stock : Low to High</option>
           <option value="stock-desc">Stock : High to Low</option>
           <option value="name-asc">Name : A to Z</option>

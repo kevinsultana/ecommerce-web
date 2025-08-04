@@ -4,15 +4,18 @@ import Swal from "sweetalert2";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { FaPaperPlane } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phoneNumber: "",
     subject: "",
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +27,8 @@ export default function ContactUs() {
       !formData.name ||
       !formData.email ||
       !formData.subject ||
-      !formData.message
+      !formData.message ||
+      !formData.phoneNumber
     ) {
       Swal.fire(
         "Lengkapi Semua Data!",
@@ -41,7 +45,14 @@ export default function ContactUs() {
         createdAt: new Date(),
       });
       Swal.fire("Berhasil!", "Pesan Anda telah terkirim.", "success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        phoneNumber: "",
+      });
+      navigate("/", { replace: true });
     } catch (error) {
       console.error("Error sending message:", error);
       Swal.fire("Gagal!", "Terjadi kesalahan saat mengirim pesan.", "error");
@@ -87,6 +98,20 @@ export default function ContactUs() {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-md text-sm text-black dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="email@example.com"
+            />
+          </div>
+          {/* Input field for Whatsapp */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Whatsapp No.
+            </label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-md text-sm text-black dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="081234567890"
             />
           </div>
           {/* Input field for Subject */}
