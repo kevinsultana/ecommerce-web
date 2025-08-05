@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BiCart } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdMenu } from "react-icons/md";
@@ -9,6 +9,8 @@ import { UserContext } from "../contexts/userContext";
 export default function Navbar() {
   const cartItems = useSelector((state) => state.cart);
   const { userData } = useContext(UserContext);
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(true);
   const navigate = useNavigate();
 
   const totalProduk = cartItems.reduce(
@@ -17,6 +19,7 @@ export default function Navbar() {
   );
 
   const handleProfileClick = () => {
+    setIsMobileMenuOpen(false);
     if (userData) {
       navigate("/profile");
     } else {
@@ -25,13 +28,17 @@ export default function Navbar() {
   };
 
   const handleCartClick = () => {
+    setIsMobileMenuOpen(false);
     if (userData) {
       navigate("/cart");
     } else {
       navigate("/auth/login");
     }
   };
-  console.log(userData);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <div className="bg-white shadow-sm sticky top-0 z-50 dark:bg-gray-800 dark:shadow-lg">
@@ -39,7 +46,10 @@ export default function Navbar() {
         {/* Logo dan Menu Dropdown untuk Mobile */}
         <div className="flex items-center">
           <div className="relative md:hidden">
-            <button className="p-2 text-gray-600 focus:outline-none dark:text-gray-300">
+            <button
+              onClick={toggleMobileMenu}
+              className="p-2 text-gray-600 focus:outline-none dark:text-gray-300"
+            >
               <MdMenu className="h-6 w-6" />
             </button>
             {/* TODO: Implementasi dropdown menu untuk mobile */}
@@ -129,6 +139,89 @@ export default function Navbar() {
             )}
           </button>
         </div>
+      </div>
+
+      {/* Mobile Menu Content */}
+      <div
+        className={`fixed inset-x-0 -top-5 bg-white shadow-lg md:hidden 
+          transition-transform duration-300 ease-in-out 
+          ${isMobileMenuOpen ? "translate-y-0 top-15" : "-translate-y-full"}
+          dark:bg-gray-800 dark:shadow-xl`}
+      >
+        <ul className="flex flex-col p-4 space-y-4 text-gray-700 dark:text-gray-200">
+          <li>
+            <Link
+              to="/"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/mac"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Mac
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/iphone"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              iPhone
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/ipad"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              iPad
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/accessories"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Accessories
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/profile"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Profile
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/cart"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Cart
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/seller"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Seller Centre
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );
