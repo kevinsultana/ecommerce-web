@@ -34,84 +34,101 @@ export default function Navbar() {
   console.log(userData);
 
   return (
-    <div className="navbar lg:px-6 bg-gray-100 shadow-md dark:bg-gray-700 dark:text-white">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <MdMenu className="h-6 w-6" />
+    <div className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center h-16">
+        {/* Logo dan Menu Dropdown untuk Mobile */}
+        <div className="flex items-center">
+          <div className="relative md:hidden">
+            <button className="p-2 text-gray-600 focus:outline-none">
+              <MdMenu className="h-6 w-6" />
+            </button>
+            {/* TODO: Implementasi dropdown menu untuk mobile */}
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 rounded-box w-52 dark:bg-gray-600"
+          <Link
+            to="/"
+            className="font-bold text-2xl text-gray-800 ml-4 md:ml-0"
           >
+            iBoks
+          </Link>
+        </div>
+
+        {/* Navigasi Utama untuk Desktop */}
+        <div className="hidden md:flex flex-grow justify-center">
+          <ul className="flex space-x-8 text-sm text-gray-700">
             <li>
-              <Link to="/">Home</Link>
+              <Link
+                to="/"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/seller">Seller Centre</Link>
+              <Link
+                to="/mac"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                Mac
+              </Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link
+                to="/iphone"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                iPhone
+              </Link>
             </li>
             <li>
-              <Link to="/cart">Cart</Link>
+              <Link
+                to="/ipad"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                iPad
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/accessories"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                Accessories
+              </Link>
             </li>
           </ul>
         </div>
-        <Link to="/" className="text-xl">
-          Ecommerce
-        </Link>
-      </div>
 
-      <div className="navbar-center hidden lg:flex">
-        <ul className="flex-row items-center px-4 py-2 gap-6 menu">
-          <li className="btn btn-ghost">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="btn btn-ghost">
-            <Link to="/about">About</Link>
-          </li>
-          <li className="btn btn-ghost">
-            <Link to="/contact">Contact Us</Link>
-          </li>
-        </ul>
-      </div>
-
-      <div className="navbar-end space-x-2">
-        <button onClick={handleCartClick} className="btn btn-ghost btn-circle">
-          <div className="indicator">
+        {/* Ikon Profil dan Keranjang */}
+        <div className="flex items-center space-x-4">
+          {/* Tombol Keranjang */}
+          <button
+            onClick={handleCartClick}
+            className="relative p-2 text-gray-600 hover:text-blue-500 transition-colors"
+          >
             <BiCart className="h-6 w-6" />
-            {userData === null
-              ? null
-              : cartItems.length > 0 && (
-                  <span className="badge badge-sm indicator-item bg-red-500 text-white">
-                    {totalProduk}
-                  </span>
-                )}
-          </div>
-        </button>
-        <button
-          onClick={handleProfileClick}
-          className="btn btn-ghost space-x-2"
-        >
-          {userData?.photoProfile !== "" ? (
-            <img
-              src={userData?.photoProfile || "/img/userPlaceholder.png"}
-              alt="profile"
-              className="h-6 w-6 rounded-full"
-            />
-          ) : (
-            <img
-              src="/img/userPlaceholder.png"
-              alt="profile"
-              className="h-6 w-6"
-            />
-          )}
-          {/* <CgProfile className="h-6 w-6" /> */}
-          <span className="hidden md:inline capitalize ">
-            {userData?.userName || "Login Here"}
-          </span>
-        </button>
+            {userData && cartItems.length > 0 && (
+              <span className="absolute top-2 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full">
+                {totalProduk}
+              </span>
+            )}
+          </button>
+
+          {/* Tombol Profil */}
+          <button
+            onClick={handleProfileClick}
+            className="p-2 text-gray-600 hover:text-blue-500 transition-colors flex items-center"
+          >
+            {userData?.photoProfile !== "" ? (
+              <img
+                src={userData?.photoProfile || "/img/userPlaceholder.png"}
+                alt="profile"
+                className="h-7 w-7 rounded-full"
+              />
+            ) : (
+              <CgProfile className="h-7 w-7" />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
