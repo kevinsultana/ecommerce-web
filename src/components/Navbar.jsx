@@ -34,19 +34,19 @@ export default function Navbar() {
   console.log(userData);
 
   return (
-    <div className="bg-white shadow-sm sticky top-0 z-50">
+    <div className="bg-white shadow-sm sticky top-0 z-50 dark:bg-gray-800 dark:shadow-lg">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center h-16">
         {/* Logo dan Menu Dropdown untuk Mobile */}
         <div className="flex items-center">
           <div className="relative md:hidden">
-            <button className="p-2 text-gray-600 focus:outline-none">
+            <button className="p-2 text-gray-600 focus:outline-none dark:text-gray-300">
               <MdMenu className="h-6 w-6" />
             </button>
             {/* TODO: Implementasi dropdown menu untuk mobile */}
           </div>
           <Link
             to="/"
-            className="font-bold text-2xl text-gray-800 ml-4 md:ml-0"
+            className="font-bold text-2xl text-gray-800 ml-4 md:ml-0 dark:text-white"
           >
             iBoks
           </Link>
@@ -54,7 +54,7 @@ export default function Navbar() {
 
         {/* Navigasi Utama untuk Desktop */}
         <div className="hidden md:flex flex-grow justify-center">
-          <ul className="flex space-x-8 text-sm text-gray-700">
+          <ul className="flex space-x-8 text-sm text-gray-700 dark:text-gray-200">
             <li>
               <Link
                 to="/"
@@ -103,11 +103,11 @@ export default function Navbar() {
           {/* Tombol Keranjang */}
           <button
             onClick={handleCartClick}
-            className="relative p-2 text-gray-600 hover:text-blue-500 transition-colors"
+            className="relative p-2 text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-300 dark:hover:text-blue-400"
           >
             <BiCart className="h-6 w-6" />
             {userData && cartItems.length > 0 && (
-              <span className="absolute top-2 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full">
+              <span className="absolute top-2 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
                 {totalProduk}
               </span>
             )}
@@ -116,7 +116,7 @@ export default function Navbar() {
           {/* Tombol Profil */}
           <button
             onClick={handleProfileClick}
-            className="p-2 text-gray-600 hover:text-blue-500 transition-colors flex items-center"
+            className="p-2 text-gray-600 hover:text-blue-500 transition-colors flex items-center dark:text-gray-300 dark:hover:text-blue-400"
           >
             {userData?.photoProfile !== "" ? (
               <img
