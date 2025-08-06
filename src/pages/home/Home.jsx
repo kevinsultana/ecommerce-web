@@ -26,9 +26,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-white dark:bg-gray-800 text-gray-800 dark:text-white transition-all duration-300">
+    <div className="min-h-screen bg-white dark:bg-gray-800 text-gray-800 dark:text-white transition-all duration-300">
       {/* Hero Section */}
-      <section className="text-center bg-indigo-50 dark:bg-gray-900 rounded-2xl p-10 mb-10 shadow">
+      {/* <section className="text-center bg-indigo-50 dark:bg-gray-900 rounded-2xl p-10 mb-10 shadow">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Selamat Datang di Toko Kami!
         </h1>
@@ -46,6 +46,59 @@ export default function Home() {
         >
           Lihat Produk
         </button>
+      </section> */}
+      <section className="bg-black pb-6">
+        <img
+          src="/heroImg/heroImgWeb.png"
+          alt="heroimg"
+          className="w-2/4 h-full object-cover mx-auto"
+        />
+        <div className="max-w-1/2 mx-auto flex flex-col items-center space-y-6">
+          <h1 className="text-white text-center  text-2xl">
+            Introducing iPhone 16 Pro and iPhone 16, built for Apple
+            Intelligence. All-new Apple Watch Series 10 and AirPods 4. Apple
+            Watch Ultra 2 and AirPods Max in fresh new colors. And AirPods Pro
+            2, with hearing health features coming this fall.
+          </h1>
+          <button
+            onClick={() =>
+              window.open("https://www.youtube.com/watch?v=uarNiSl_uh4&t=2393s")
+            }
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
+            <p>Watch the event</p>
+          </button>
+        </div>
+      </section>
+
+      <section className="bg-black pb-6 bg-[url('/heroImg/iphone16Pro.png')] h-full bg-cover">
+        <div className="pt-36 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
+          <h1 className="text-white text-center text-6xl ">Iphone 16 Pro</h1>
+          <div className="pt-120" />
+          <p className="text-white text-center text-xl ">
+            Built for Apple Intelligence — personal, private, powerful. Camera
+            Control, an easier way to quickly access camera tools. Stunning 4K
+            120 fps Dolby Vision video. A18 Pro chip. And a huge leap in battery
+            life.
+          </p>
+          <div className="py-4">
+            <p className="text-white text-center text-base ">
+              Pre-order starting 9.13 Available starting 9.20
+            </p>
+            <p className="text-white text-center text-base ">
+              Apple Intelligence coming this fall
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center space-x-4">
+          <button className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer">
+            Learn More
+          </button>
+          <button className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer">
+            View Pricing
+          </button>
+        </div>
+        {/* <img src="/heroImg/iphone16Pro.png" alt="" className="w-full" /> */}
       </section>
 
       {/* Produk Unggulan */}

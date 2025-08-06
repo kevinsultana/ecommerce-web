@@ -105,6 +105,22 @@ export default function Navbar() {
                 Accessories
               </Link>
             </li>
+            <li>
+              <Link
+                to="/about"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                Cantact Us
+              </Link>
+            </li>
           </ul>
         </div>
 
