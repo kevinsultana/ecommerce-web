@@ -72,7 +72,7 @@ export default function Home() {
       </section>
 
       <section className="bg-black pb-6 bg-[url('/heroImg/iphone16Pro.png')] h-full bg-cover">
-        <div className="pt-36 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
+        <div className="pt-60 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
           <h1 className="text-white text-center text-6xl ">Iphone 16 Pro</h1>
           <div className="pt-120" />
           <p className="text-white text-center text-xl ">
@@ -91,14 +91,53 @@ export default function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center space-x-4">
-          <button className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer">
+          <button
+            onClick={() => navigate("/iphone")}
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
             Learn More
           </button>
-          <button className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer">
+          <button
+            onClick={() => navigate("/store")}
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
             View Pricing
           </button>
         </div>
-        {/* <img src="/heroImg/iphone16Pro.png" alt="" className="w-full" /> */}
+      </section>
+
+      <section className=" pb-6 bg-[url('/heroImg/iphone16.png')] h-full bg-cover">
+        <div className="pt-30 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
+          <h1 className="text-white text-center text-6xl ">Iphone 16</h1>
+          <div className="pt-120" />
+          <p className="text-white text-center text-xl ">
+            Built for Apple Intelligence to help you write, express yourself,
+            and get things done effortlessly. Camera Control, an easier way to
+            quickly access camera tools. And the custom-built A18 chip.
+          </p>
+          <div className="py-4">
+            <p className="text-white text-center text-base ">
+              Pre-order starting 9.13 Available starting 9.20
+            </p>
+            <p className="text-white text-center text-base ">
+              Apple Intelligence coming this fall
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center space-x-4">
+          <button
+            onClick={() => navigate("/iphone")}
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
+            Learn More
+          </button>
+          <button
+            onClick={() => navigate("/store")}
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
+            View Pricing
+          </button>
+        </div>
       </section>
 
       {/* Produk Unggulan */}

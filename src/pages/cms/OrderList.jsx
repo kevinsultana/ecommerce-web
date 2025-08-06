@@ -150,6 +150,10 @@ export default function OrderList() {
                     <span className="w-40 font-medium">Alamat</span>
                     <span>: {order.alamatLengkap}</span>
                   </div>
+                  <div className="flex">
+                    <span className="w-40 font-medium">Pesan Buyer</span>
+                    <span>: {order.pesan}</span>
+                  </div>
                 </div>
               </div>
               {order.status === "pending" && (
