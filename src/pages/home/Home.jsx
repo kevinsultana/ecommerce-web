@@ -106,7 +106,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className=" pb-6 bg-[url('/heroImg/iphone16.png')] h-full bg-cover">
+      <section className="pb-6 bg-[url('/heroImg/iphone16.png')] h-full bg-cover">
         <div className="pt-30 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
           <h1 className="text-white text-center text-6xl ">Iphone 16</h1>
           <div className="pt-120" />
@@ -127,6 +127,89 @@ export default function Home() {
         <div className="flex items-center justify-center space-x-4">
           <button
             onClick={() => navigate("/iphone")}
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
+            Learn More
+          </button>
+          <button
+            onClick={() => navigate("/store")}
+            className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+          >
+            View Pricing
+          </button>
+        </div>
+      </section>
+
+      <section className="pb-6 bg-[url('/heroImg/mac.png')] h-screen bg-cover">
+        <div className="pt-20 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
+          <h1 className="text-black text-center text-6xl">Macbook Air</h1>
+          <p className="text-black text-center text-base ">
+            Sky blue color. Sky high performance with M4.
+          </p>
+          <div className="flex items-center justify-center space-x-4">
+            <button
+              onClick={() => navigate("/macbook")}
+              className="px-6 py-3 rounded-full border border-black text-black font-semibold hover:bg-sky-300 hover:text-white transition-all duration-300 cursor-pointer"
+            >
+              Learn More
+            </button>
+            <button
+              onClick={() => navigate("/store")}
+              className="px-6 py-3 rounded-full border border-black text-black font-semibold hover:bg-sky-300 hover:text-white transition-all duration-300 cursor-pointer"
+            >
+              View Pricing
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-6 bg-[url('/heroImg/iwatch.png')] h-250 bg-center">
+        <div className="pt-60 max-w-1/2 mx-auto flex flex-col items-center space-y-6">
+          <p className="text-black text-center text-xl ">
+            Our thinnest watch with our biggest display.Invaluable health
+            insights, including sleep apnea notifications. Tracking for your
+            activity and workouts — with depth and water temperature. All in our
+            fastest-charging watch ever.
+          </p>
+          <div className="py-4">
+            <p className="text-black text-center text-base ">
+              Available starting 9.20
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center space-x-4">
+          <button
+            onClick={() => navigate("/iwatch")}
+            className="px-6 py-3 rounded-full border border-black text-black font-semibold hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
+          >
+            Learn More
+          </button>
+          <button
+            onClick={() => navigate("/store")}
+            className="px-6 py-3 rounded-full border border-black text-black font-semibold hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
+          >
+            View Pricing
+          </button>
+        </div>
+      </section>
+
+      <section className="pb-6 bg-[url('/heroImg/airpods.png')] h-250 bg-cover">
+        <div className="pt-120 max-w-1/3 mx-auto flex flex-col items-center space-y-6">
+          <h1 className="text-white text-center text-6xl ">AirPods 4</h1>
+          <p className="text-white text-center text-xl ">
+            Updated fit for all-day comfort. A totally transformed audio
+            experience. And available with Active Noise Cancellation — a first
+            for this open-ear design.
+          </p>
+          <div className="py-4">
+            <p className="text-white text-center text-base ">
+              Available starting 9.20
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center space-x-4">
+          <button
+            onClick={() => navigate("/airpods")}
             className="px-6 py-3 rounded-full border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
           >
             Learn More
