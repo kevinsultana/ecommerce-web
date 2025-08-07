@@ -8,8 +8,6 @@ export default function Home() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
-  // Fungsi untuk mengambil data produk dari Firestore
-  // Pastikan `db` sudah diinisialisasi dengan benar dari file `firebase.js`
   const getProducts = async () => {
     try {
       const querySnap = await getDocs(collection(db, "products"));

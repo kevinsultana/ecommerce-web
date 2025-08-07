@@ -19,6 +19,7 @@ import Checkout from "./pages/home/Checkout";
 import UserPurchase from "./pages/home/UserPurchase";
 import OrderList from "./pages/cms/OrderList";
 import Message from "./pages/cms/Message";
+import Macbook from "./pages/home/Macbook";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="contact" element={<ContactUs />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="purchase" element={<UserPurchase />} />
+            <Route path="mac" element={<Macbook />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>
