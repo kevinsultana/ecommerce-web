@@ -21,6 +21,7 @@ import OrderList from "./pages/cms/OrderList";
 import Message from "./pages/cms/Message";
 import Macbook from "./pages/home/Macbook";
 import Iphone from "./pages/home/Iphone";
+import Ipad from "./pages/home/Ipad";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="purchase" element={<UserPurchase />} />
             <Route path="mac" element={<Macbook />} />
             <Route path="iphone" element={<Iphone />} />
+            <Route path="ipad" element={<Ipad />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>
