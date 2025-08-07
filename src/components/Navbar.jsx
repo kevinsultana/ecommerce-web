@@ -10,7 +10,7 @@ export default function Navbar() {
   const cartItems = useSelector((state) => state.cart);
   const { userData } = useContext(UserContext);
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const totalProduk = cartItems.reduce(
