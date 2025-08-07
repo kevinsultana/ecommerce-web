@@ -14,7 +14,7 @@ const productData = [
     imageUrl: "/heroImg/airpodHero.png",
     bgColor: "bg-gradient-to-tr from-[#1E293B] to-[#9CA3AF]",
     textColor: "text-white",
-    buttons: [{ text: "Pre-order", style: "bg-gray-800 text-white" }],
+    buttons: [{ text: "Buy Now", style: "bg-gray-800 text-white" }],
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const productData = [
     imageUrl: "/heroImg/airpodProHero.png",
     bgColor: "bg-black",
     textColor: "text-white",
-    buttons: [{ text: "Buy", style: "bg-blue-500 text-white" }],
+    buttons: [{ text: "Buy Now", style: "bg-blue-500 text-white" }],
     imageAlignment: "right",
   },
   {
@@ -37,7 +37,7 @@ const productData = [
     textColor: "text-black dark:text-white",
     buttons: [
       {
-        text: "Buy",
+        text: "Buy Now",
         style: "bg-gray-300 text-black dark:bg-gray-700 dark:text-white",
       },
     ],
@@ -113,6 +113,7 @@ export default function Airpods() {
                     <button
                       key={index}
                       className={`px-6 py-2 rounded-full font-medium transition-colors ${button.style}`}
+                      onClick={() => navigate("/store")}
                     >
                       {button.text}
                     </button>
