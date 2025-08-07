@@ -99,10 +99,10 @@ export default function Navbar() {
             </li>
             <li>
               <Link
-                to="/accessories"
+                to="/iwatch"
                 className="py-2 hover:text-blue-500 transition-colors duration-200"
               >
-                Accessories
+                iWatch
               </Link>
             </li>
             <li>
@@ -203,38 +203,29 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              to="/accessories"
+              to="/iwatch"
               className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Accessories
+              iWatch
             </Link>
           </li>
           <li>
             <Link
-              to="/profile"
+              to="/about"
               className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Profile
+              About
             </Link>
           </li>
           <li>
             <Link
-              to="/cart"
+              to="/contact"
               className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Cart
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/seller"
-              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Seller Centre
+              Contact Us
             </Link>
           </li>
         </ul>
