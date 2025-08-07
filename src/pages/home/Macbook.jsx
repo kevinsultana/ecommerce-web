@@ -1,11 +1,15 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
+import { useNavigate } from "react-router";
+import formatRupiah from "../../utils/FormatRupiah";
 
 export default function Macbook() {
   const [selectedCategory, setSelectedCategory] = useState("laptop");
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
+
+  const navigate = useNavigate();
 
   const getProductByCategory = async () => {
     setLoading(true);
@@ -92,23 +96,30 @@ export default function Macbook() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-              {products.map((product) => (
+              {products.map((item) => (
                 <div
-                  key={product.id}
-                  className="card w-full shadow-xl dark:bg-gray-700"
+                  key={item.id}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer"
+                  onClick={() => navigate(`/product/${item.id}`)}
                 >
-                  <figure>
+                  <div className="w-full h-auto sm:h-90 overflow-hidden rounded-t-xl bg-gray-100 dark:bg-gray-700">
                     <img
-                      src={product.imgUrl}
-                      alt={product.name}
-                      className="w-full "
+                      src={item.imgUrl}
+                      alt={item.name}
+                      className="w-full h-full object-contain p-2"
                     />
-                  </figure>
-                  <div className="card-body space-y-2">
-                    <h2 className="card-title">{product.name.slice(0, 30)}</h2>
-                    <p>{product.description.slice(0, 150)}</p>
-                    <div className="card-actions justify-end">
-                      <button className="btn btn-primary">Buy Now</button>
+                  </div>
+                  <div className="p-3 sm:p-4 space-y-1 sm:space-y-2">
+                    <h3 className="text-sm sm:text-md font-semibold truncate">
+                      {item.name}
+                    </h3>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                      <span className="text-indigo-600 dark:text-indigo-400 font-bold text-sm sm:text-base">
+                        {formatRupiah(item.price)}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Terjual: {item.sold ?? 0}
+                      </span>
                     </div>
                   </div>
                 </div>
