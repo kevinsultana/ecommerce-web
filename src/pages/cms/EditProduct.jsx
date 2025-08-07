@@ -20,8 +20,8 @@ export default function EditProduct() {
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: "",
-    price: "",
-    stock: "",
+    price: 0,
+    stock: 0,
     category: "",
     description: "",
     imgUrl: "",
@@ -103,6 +103,10 @@ export default function EditProduct() {
   };
 
   const handleChange = (e) => {
+    if (e.target.name === "price" || e.target.name === "stock") {
+      setProduct({ ...product, [e.target.name]: Number(e.target.value) });
+      return;
+    }
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 

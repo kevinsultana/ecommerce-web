@@ -107,6 +107,14 @@ export default function Navbar() {
             </li>
             <li>
               <Link
+                to="/store"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                Store
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/about"
                 className="py-2 hover:text-blue-500 transition-colors duration-200"
               >
@@ -129,7 +137,7 @@ export default function Navbar() {
           {/* Tombol Keranjang */}
           <button
             onClick={handleCartClick}
-            className="relative p-2 text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-300 dark:hover:text-blue-400"
+            className="relative p-2 text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-300 dark:hover:text-blue-400 cursor-pointer"
           >
             <BiCart className="h-6 w-6" />
             {userData && cartItems.length > 0 && (
@@ -142,7 +150,7 @@ export default function Navbar() {
           {/* Tombol Profil */}
           <button
             onClick={handleProfileClick}
-            className="p-2 text-gray-600 hover:text-blue-500 transition-colors flex items-center dark:text-gray-300 dark:hover:text-blue-400"
+            className="p-2 text-gray-600 hover:text-blue-500 transition-colors flex items-center dark:text-gray-300 dark:hover:text-blue-400 cursor-pointer"
           >
             {userData?.photoProfile !== "" ? (
               <img
@@ -151,8 +159,15 @@ export default function Navbar() {
                 className="h-7 w-7 rounded-full"
               />
             ) : (
-              <CgProfile className="h-7 w-7" />
+              <img
+                src={userData?.photoProfile || "/img/userPlaceholder.png"}
+                alt="profile"
+                className="h-7 w-7 rounded-full"
+              />
             )}
+            <span className="ml-2">
+              {userData?.userName ? userData.userName : "Login here"}
+            </span>
           </button>
         </div>
       </div>
@@ -208,6 +223,15 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               iWatch
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/store"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Store
             </Link>
           </li>
           <li>

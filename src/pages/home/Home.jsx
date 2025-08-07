@@ -204,14 +204,14 @@ export default function Home() {
       </section>
 
       {/* Produk Unggulan */}
-      <section id="produk-unggulan" className="py-12 px-4">
-        <h2 className="text-3xl font-bold mb-6 text-center">Produk Unggulan</h2>
+      <section className="py-12 px-4">
+        <h2 className="text-3xl font-bold mb-6 text-center">All Products</h2>
         {products.length === 0 ? (
           <p className="text-center text-gray-500 dark:text-gray-400">
             Belum ada produk tersedia.
           </p>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
             {products.map((item) => (
               <div
                 key={item.id}

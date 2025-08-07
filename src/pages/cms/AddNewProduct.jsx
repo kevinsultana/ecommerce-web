@@ -10,10 +10,10 @@ export default function AddNewProduct() {
   const [product, setProduct] = useState({
     name: "",
     description: "",
-    price: "",
+    price: 0,
     imgUrl: "",
     category: "",
-    stock: "",
+    stock: 0,
   });
   const [categories, setCategories] = useState([]);
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
@@ -68,6 +68,13 @@ export default function AddNewProduct() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "price" || name === "stock") {
+      setProduct((prevProduct) => ({
+        ...prevProduct,
+        [name]: Number(value),
+      }));
+      return;
+    }
     setProduct((prevProduct) => ({
       ...prevProduct,
       [name]: value,
