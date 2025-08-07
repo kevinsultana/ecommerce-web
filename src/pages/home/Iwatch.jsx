@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
-import IpadProductCarosel from "../../components/IpadProductCarosel";
+import IwatchProductCarosel from "../../components/IwatchProductCarosel";
 
-export default function Ipad() {
-  const [selectedCategory, setSelectedCategory] = useState("ipad");
+export default function Iwatch() {
+  const [selectedCategory, setSelectedCategory] = useState("iwatch");
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
@@ -42,15 +42,15 @@ export default function Ipad() {
       {/* hero */}
       <section className="py-2 md:py-6 px-4 lg:px-30 space-y-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-7xl font-bold">iPad</h1>
+          <h1 className="text-7xl font-bold">iWatch</h1>
           <p className="text-lg font-semibold">
-            Touch, draw,
-            <br /> and type on one magical device.
+            The ultimate device
+            <br /> for a healthy life.
           </p>
         </div>
         <div className="flex justify-center items-center">
           <img
-            src="/heroImg/ipadHero.png"
+            src="/heroImg/iwatchHero.png"
             alt="iphone"
             className="w-full h-dvh rounded-2xl"
           />
@@ -58,37 +58,37 @@ export default function Ipad() {
       </section>
 
       {/* product details */}
-      <IpadProductCarosel />
+      <IwatchProductCarosel />
 
       {/* explore the product */}
       <section className="py-2 md:py-6 px-4 lg:px-20 space-y-6 bg-gray-100 dark:bg-gray-800 pb-8">
         <h1 className="text-4xl font-bold">Explore the lineup</h1>
         <div className="flex items-center space-x-2 bg-white w-fit p-1 rounded-full ">
           <button
-            onClick={() => setSelectedCategory("ipad")}
+            onClick={() => setSelectedCategory("iwatch")}
             className={`
             px-6 py-2 text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
             ${
-              selectedCategory === "ipad"
+              selectedCategory === "iwatch"
                 ? "bg-black text-white dark:bg-black dark:text-white "
                 : "text-black hover:text-black  dark:hover:text-black"
             }
           `}
           >
-            Ipad
+            iWatch
           </button>
           <button
-            onClick={() => setSelectedCategory("tablet")}
+            onClick={() => setSelectedCategory("smartwatch")}
             className={`
             px-6 py-2 text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
             ${
-              selectedCategory === "tablet"
+              selectedCategory === "smartwatch"
                 ? "bg-black text-white dark:bg-black dark:text-white "
                 : "text-black hover:text-black  dark:hover:text-black"
             }
           `}
           >
-            Tablet android
+            Smartwatch
           </button>
         </div>
 

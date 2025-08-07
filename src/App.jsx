@@ -22,6 +22,7 @@ import Message from "./pages/cms/Message";
 import Macbook from "./pages/home/Macbook";
 import Iphone from "./pages/home/Iphone";
 import Ipad from "./pages/home/Ipad";
+import Iwatch from "./pages/home/Iwatch";
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="mac" element={<Macbook />} />
             <Route path="iphone" element={<Iphone />} />
             <Route path="ipad" element={<Ipad />} />
+            <Route path="iwatch" element={<Iwatch />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>

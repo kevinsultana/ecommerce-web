@@ -145,6 +145,20 @@ export default function AddNewProduct() {
               onChange={handleChange}
             />
           </div>
+          {/* sementara */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              img url
+            </label>
+            <input
+              type="text"
+              placeholder="Contoh: Headphone Wireless"
+              className="mt-1 w-full px-4 py-2 border rounded-md text-sm dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              name="imgUrl"
+              value={product.imgUrl}
+              onChange={handleChange}
+            />
+          </div>
 
           {/* Deskripsi */}
           <div>
