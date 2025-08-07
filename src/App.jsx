@@ -24,6 +24,7 @@ import Iphone from "./pages/home/Iphone";
 import Ipad from "./pages/home/Ipad";
 import Iwatch from "./pages/home/Iwatch";
 import Store from "./pages/home/Store";
+import Airpods from "./pages/home/Airpods";
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="ipad" element={<Ipad />} />
             <Route path="iwatch" element={<Iwatch />} />
             <Route path="store" element={<Store />} />
+            <Route path="airpods" element={<Airpods />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>

@@ -107,6 +107,14 @@ export default function Navbar() {
             </li>
             <li>
               <Link
+                to="/airpods"
+                className="py-2 hover:text-blue-500 transition-colors duration-200"
+              >
+                AirPods
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/store"
                 className="py-2 hover:text-blue-500 transition-colors duration-200"
               >
@@ -223,6 +231,15 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               iWatch
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/airpods"
+              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              AirPods
             </Link>
           </li>
           <li>
