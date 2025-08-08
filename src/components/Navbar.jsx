@@ -132,7 +132,7 @@ export default function Navbar() {
                 to="/contact"
                 className="py-2 hover:text-blue-500 transition-colors duration-200"
               >
-                Cantact Us
+                Contact Us
               </Link>
             </li>
           </ul>
