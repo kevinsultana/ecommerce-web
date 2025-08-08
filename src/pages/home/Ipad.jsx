@@ -44,10 +44,10 @@ export default function Ipad() {
       {/* hero */}
       <section className="py-2 md:py-6 px-4 lg:px-30 space-y-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-7xl font-bold">iPad</h1>
-          <p className="text-lg font-semibold">
+          <h1 className="text-3xl lg:text-7xl font-bold">iPad</h1>
+          <p className="text-sm lg:text-lg font-semibold">
             Touch, draw,
-            <br /> and type on one magical device.
+            <br /> and type on <br /> one magical device.
           </p>
         </div>
         <div className="flex justify-center items-center">
@@ -64,12 +64,12 @@ export default function Ipad() {
 
       {/* explore the product */}
       <section className="py-2 md:py-6 px-4 lg:px-20 space-y-6 bg-gray-100 dark:bg-gray-800 pb-8">
-        <h1 className="text-4xl font-bold">Explore the lineup</h1>
+        <h1 className="text-xl lg:text-4xl font-bold">Explore the lineup</h1>
         <div className="flex items-center space-x-2 bg-white w-fit p-1 rounded-full ">
           <button
             onClick={() => setSelectedCategory("ipad")}
             className={`
-            px-6 py-2 text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
+            px-6 py-2 text-sm lg:text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
             ${
               selectedCategory === "ipad"
                 ? "bg-black text-white dark:bg-black dark:text-white "
@@ -82,7 +82,7 @@ export default function Ipad() {
           <button
             onClick={() => setSelectedCategory("tablet")}
             className={`
-            px-6 py-2 text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
+            px-6 py-2 text-sm lg:text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
             ${
               selectedCategory === "tablet"
                 ? "bg-black text-white dark:bg-black dark:text-white "

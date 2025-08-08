@@ -143,12 +143,12 @@ export default function Airpods() {
 
       {/* explore the product */}
       <section className="py-2 md:py-6 px-4 lg:px-20 space-y-6 bg-gray-100 dark:bg-gray-800 pb-8">
-        <h1 className="text-4xl font-bold">Explore the lineup</h1>
+        <h1 className="text-xl lg:text-4xl font-bold">Explore the lineup</h1>
         <div className="flex items-center space-x-2 bg-white w-fit p-1 rounded-full ">
           <button
             onClick={() => setSelectedCategory("airpods")}
             className={`
-                  px-6 py-2 text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
+            px-6 py-2 text-sm lg:text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
                   ${
                     selectedCategory === "airpods"
                       ? "bg-black text-white dark:bg-black dark:text-white "
@@ -161,7 +161,7 @@ export default function Airpods() {
           <button
             onClick={() => setSelectedCategory("tws")}
             className={`
-                  px-6 py-2 text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
+            px-6 py-2 text-sm lg:text-lg font-semibold rounded-full transition-colors duration-300 hover:cursor-pointer
                   ${
                     selectedCategory === "tws"
                       ? "bg-black text-white dark:bg-black dark:text-white "

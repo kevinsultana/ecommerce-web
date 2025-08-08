@@ -103,7 +103,7 @@ export default function IphoneProductCarosel() {
   return (
     <div className="relative overflow-hidden bg-white dark:bg-gray-800 py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-8">
+        <h2 className="text-xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-8">
           Get to know iPhone.
         </h2>
 

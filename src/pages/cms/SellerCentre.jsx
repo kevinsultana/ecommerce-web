@@ -203,7 +203,7 @@ export default function SellerCentre() {
       </div>
 
       {/* Search & Filter */}
-      <div className="flex items-center justify-center gap-4 py-6">
+      <div className="flex flex-col md:flex-row  items-center justify-center gap-4 py-6">
         <div>
           <input
             type="text"

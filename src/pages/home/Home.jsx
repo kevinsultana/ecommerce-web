@@ -130,7 +130,7 @@ export default function Home() {
           </p>
           <div className="flex items-center justify-center space-x-4">
             <button
-              onClick={() => navigate("/macbook")}
+              onClick={() => navigate("/mac")}
               className="px-6 py-3 rounded-full border border-black text-black font-semibold hover:bg-sky-300 hover:text-white transition-all duration-300 cursor-pointer"
             >
               Learn More
@@ -201,47 +201,6 @@ export default function Home() {
             </button>
           </div>
         </div>
-      </section>
-
-      {/* Produk Unggulan */}
-      <section className="py-12 px-4">
-        <h2 className="text-3xl font-bold mb-6 text-center">All Products</h2>
-        {products.length === 0 ? (
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            Belum ada produk tersedia.
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
-            {products.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer"
-                onClick={() => navigate(`/product/${item.id}`)}
-              >
-                <div className="w-full h-32 sm:h-40 overflow-hidden rounded-t-xl bg-gray-100 dark:bg-gray-700">
-                  <img
-                    src={item.imgUrl}
-                    alt={item.name}
-                    className="w-full h-full object-contain p-2"
-                  />
-                </div>
-                <div className="p-3 sm:p-4 space-y-1 sm:space-y-2">
-                  <h3 className="text-sm sm:text-md font-semibold truncate">
-                    {item.name}
-                  </h3>
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                    <span className="text-indigo-600 dark:text-indigo-400 font-bold text-sm sm:text-base">
-                      {formatRupiah(item.price)}
-                    </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      Terjual: {item.sold ?? 0}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </section>
     </div>
   );
