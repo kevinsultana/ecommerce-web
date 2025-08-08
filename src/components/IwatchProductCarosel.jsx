@@ -98,7 +98,6 @@ export default function IwatchProductCarosel() {
           Get to know iWatch.
         </h2>
 
-        {/* Kontainer untuk carousel items */}
         <div
           ref={scrollContainerRef}
           className="flex space-x-6 overflow-x-hidden snap-x snap-mandatory"
@@ -126,7 +125,6 @@ export default function IwatchProductCarosel() {
           ))}
         </div>
 
-        {/* Tombol Navigasi */}
         <div className="flex items-center space-x-2 justify-center mt-4">
           <button
             onClick={scrollLeft}

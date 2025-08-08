@@ -42,7 +42,7 @@ export default function CmsLayout() {
           <Outlet />
         </main>
       </div>
-      <div className="fixed bottom-6 right-6 lg:bottom-10 lg:right-10 z-50">
+      <div className="fixed bottom-1 right-1 lg:bottom-10 lg:right-10 z-50">
         <DarkModeToggle />
       </div>
     </div>

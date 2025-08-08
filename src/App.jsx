@@ -25,6 +25,7 @@ import Ipad from "./pages/home/Ipad";
 import Iwatch from "./pages/home/Iwatch";
 import Store from "./pages/home/Store";
 import Airpods from "./pages/home/Airpods";
+import EditProfile from "./pages/home/EditProfile";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="product/:id" element={<ProductDetail />} />
             <Route path="cart" element={<Cart />} />
             <Route path="profile" element={<UserProfile />} />
+            <Route path="profile/edit" element={<EditProfile />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<ContactUs />} />
             <Route path="checkout" element={<Checkout />} />

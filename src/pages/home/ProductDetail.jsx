@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { addToCart } from "../../redux/features/CartSlice";
@@ -6,7 +6,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import formatRupiah from "../../utils/FormatRupiah";
 import { FaShippingFast } from "react-icons/fa";
-import { FaShop } from "react-icons/fa6";
 import { UserContext } from "../../contexts/userContext";
 import Swal from "sweetalert2";
 
@@ -25,6 +24,7 @@ export default function ProductDetail() {
       setProduct({ ...res, id: params.id });
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     }
   };
 
@@ -81,7 +81,7 @@ export default function ProductDetail() {
   return (
     <div className="min-h-screen p-4 md:p-8 bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-all duration-300">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 p-6 md:p-8">
-        {/* Kolom Kiri: Gambar Produk */}
+        {/* Kiri */}
         <div className="w-full lg:w-2/5 flex flex-col items-center">
           <div className="w-full h-80 md:h-96 lg:h-[450px] bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md flex items-center justify-center">
             <img
@@ -117,27 +117,6 @@ export default function ProductDetail() {
             {product.name || "Nama Produk Tidak Tersedia"}
           </h1>
 
-          {/* <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
-            {product.rating && (
-              <div className="flex items-center gap-1">
-                <FaStar className="text-yellow-400" />
-                <span>{product.rating}</span>
-                <span className="mx-2">|</span>
-              </div>
-            )}
-            {product.reviews && (
-              <span className="hover:underline cursor-pointer">
-                {product.reviews} Penilaian
-              </span>
-            )}
-            {product.sold && (
-              <>
-                <span className="mx-2">|</span>
-                <span>{product.sold} Terjual</span>
-              </>
-            )}
-          </div> */}
-
           {/* Harga */}
           <div className="flex items-baseline gap-3">
             <span className="text-red-600 dark:text-red-400 text-3xl md:text-5xl font-bold">
@@ -145,7 +124,6 @@ export default function ProductDetail() {
             </span>
           </div>
 
-          {/* Divider */}
           <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
 
           {/* Opsi Kuantitas */}
@@ -237,7 +215,6 @@ export default function ProductDetail() {
             </p>
           </div>
 
-          {/* Divider */}
           <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
         </div>
       </div>

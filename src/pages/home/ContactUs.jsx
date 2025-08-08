@@ -1,12 +1,13 @@
-// src/pages/home/ContactUs.jsx
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { UserContext } from "../../contexts/userContext";
 
 export default function ContactUs() {
+  const { userData } = useContext(UserContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -61,6 +62,14 @@ export default function ContactUs() {
     }
   };
 
+  const hanldeUseUserData = () => {
+    setFormData({
+      name: userData.userName,
+      email: userData.email,
+      phoneNumber: userData.noHp,
+    });
+  };
+
   return (
     <div className="min-h-screen p-4 md:p-8 bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-all duration-300">
       <div className="max-w-4xl mx-auto rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 p-6 md:p-10 space-y-8">
@@ -69,10 +78,15 @@ export default function ContactUs() {
         </h1>
         <p className="text-lg text-gray-700 dark:text-gray-300 text-center max-w-2xl mx-auto">
           Punya pertanyaan atau butuh bantuan? Jangan ragu untuk menghubungi
-          kami melalui formulir di bawah ini.
+          kami melalui formulir di bawah ini. <br />
+          <button
+            onClick={hanldeUseUserData}
+            className="text-blue-500 cursor-pointer"
+          >
+            Gunakan Data Saya
+          </button>
         </p>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Input field for Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nama Lengkap
@@ -86,7 +100,6 @@ export default function ContactUs() {
               placeholder="Nama Anda"
             />
           </div>
-          {/* Input field for Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Email
@@ -100,7 +113,6 @@ export default function ContactUs() {
               placeholder="email@example.com"
             />
           </div>
-          {/* Input field for Whatsapp */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Whatsapp No.
@@ -114,7 +126,6 @@ export default function ContactUs() {
               placeholder="081234567890"
             />
           </div>
-          {/* Input field for Subject */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Subjek
@@ -128,7 +139,6 @@ export default function ContactUs() {
               placeholder="Subjek pesan"
             />
           </div>
-          {/* Textarea for Message */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Pesan
@@ -142,7 +152,6 @@ export default function ContactUs() {
               placeholder="Tulis pesan Anda di sini..."
             />
           </div>
-          {/* Submit button */}
           <div className="flex justify-end">
             <button
               type="submit"

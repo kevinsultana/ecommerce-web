@@ -1,4 +1,3 @@
-// src/pages/home/About.jsx
 import React from "react";
 
 export default function About() {
@@ -35,26 +34,26 @@ export default function About() {
             <li>
               <span className="font-semibold text-gray-800 dark:text-gray-200">
                 Produk Berkualitas:
-              </span>{" "}
+              </span>
               Kami hanya menjual produk-produk pilihan yang telah melalui proses
               seleksi ketat.
             </li>
             <li>
               <span className="font-semibold text-gray-800 dark:text-gray-200">
                 Harga Terbaik:
-              </span>{" "}
+              </span>
               Nikmati harga kompetitif dan penawaran menarik setiap hari.
             </li>
             <li>
               <span className="font-semibold text-gray-800 dark:text-gray-200">
                 Pelayanan Prima:
-              </span>{" "}
+              </span>
               Tim dukungan pelanggan kami siap membantu Anda kapan saja.
             </li>
             <li>
               <span className="font-semibold text-gray-800 dark:text-gray-200">
                 Pengiriman Cepat & Aman:
-              </span>{" "}
+              </span>
               Kami bekerja sama dengan mitra logistik terpercaya untuk
               pengiriman yang cepat.
             </li>

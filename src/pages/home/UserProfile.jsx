@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
-import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from "react-router";
 import { auth } from "../../firebase/firebase";
+import { useDispatch } from "react-redux";
+import { deleteCart } from "../../redux/features/CartSlice";
 
 export default function UserProfile() {
-  const { user, userRole, loading, userData } = useContext(UserContext);
+  const { userRole, loading, userData } = useContext(UserContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogOut = () => {
+    dispatch(deleteCart());
     auth.signOut().then(() => {
       navigate("/", { replace: true });
     });
@@ -23,14 +26,15 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="p-4 flex items-center justify-center">
+    <div className="p-4 flex flex-col items-center justify-center gap-4 lg:pt-12">
+      <h2 className="card-title text-3xl font-bold mb-2">Profil Pengguna</h2>
       <div className="card w-full max-w-lg shadow-xl bg-slate-100 dark:bg-gray-700 text-gray-900 dark:text-white">
         <div className="card-body items-center text-center">
           {userData?.photoProfile !== "" ? (
             <img
               src={userData?.photoProfile}
               alt="profile"
-              className="h-32 w-32 rounded-full"
+              className="h-32 w-32 rounded-full object-cover"
             />
           ) : (
             <img
@@ -39,11 +43,13 @@ export default function UserProfile() {
               className="h-32 w-32"
             />
           )}
-          <h2 className="card-title text-3xl font-bold mb-2">
-            Profil Pengguna
-          </h2>
           <p className="text-lg mb-2">
-            Email: <span className="font-semibold">{user.email}</span>
+            User Name:{" "}
+            <span className="font-semibold">{userData.userName}</span>
+          </p>
+
+          <p className="text-lg mb-2">
+            Email: <span className="font-semibold">{userData.email}</span>
           </p>
           <p className="text-lg mb-4">
             Role:

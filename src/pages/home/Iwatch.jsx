@@ -4,6 +4,7 @@ import { db } from "../../firebase/firebase";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
 import IwatchProductCarosel from "../../components/IwatchProductCarosel";
+import Swal from "sweetalert2";
 
 export default function Iwatch() {
   const [selectedCategory, setSelectedCategory] = useState("iwatch");
@@ -28,6 +29,7 @@ export default function Iwatch() {
       setProducts(res);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }

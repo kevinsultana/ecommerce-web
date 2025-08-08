@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
+import Swal from "sweetalert2";
 
 export default function Macbook() {
   const [selectedCategory, setSelectedCategory] = useState("laptop");
@@ -27,6 +28,7 @@ export default function Macbook() {
       setProducts(res);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }

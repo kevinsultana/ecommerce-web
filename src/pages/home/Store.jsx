@@ -7,9 +7,12 @@ export default function Store() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [data, setData] = useState([]);
-  const [sort, setSort] = useState("");
+  const [products, setProducts] = useState([]);
+  const [sort, setSort] = useState("name-asc");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6);
 
   const navigate = useNavigate();
 
@@ -60,7 +63,8 @@ export default function Store() {
         });
       }
 
-      setData(products);
+      setProducts(products);
+      setCurrentPage(1);
     } catch (error) {
       console.error("Gagal mengambil data produk:", error);
     } finally {
@@ -73,8 +77,59 @@ export default function Store() {
   }, []);
 
   useEffect(() => {
-    getData();
+    const debounce = setTimeout(() => {
+      getData();
+    }, 500);
+
+    return () => clearTimeout(debounce);
   }, [selectedCategory, sort, searchQuery]);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const renderPaginationButtons = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+
+    return (
+      <div className="flex justify-center mt-8 space-x-2">
+        <button
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed dark:text-white"
+        >
+          &laquo;
+        </button>
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            className={`px-4 py-2 border rounded-md text-sm transition-colors duration-200
+              ${
+                currentPage === number
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
+              }`}
+          >
+            {number}
+          </button>
+        ))}
+        <button
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed dark:text-white"
+        >
+          &raquo;
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -133,7 +188,7 @@ export default function Store() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 value={searchQuery}
               />
-              {/*  Sortir */}
+              {/* Sortir */}
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
@@ -152,22 +207,23 @@ export default function Store() {
 
           {/* Kondisi Loading */}
           {loading ? (
-            <div className="text-center py-10">
+            <div className="text-center py-10 space-y-4">
               <p className="text-gray-500 dark:text-gray-400">
                 Loading produk...
               </p>
+              <span className="loading loading-spinner loading-lg text-primary"></span>
             </div>
           ) : (
             <>
-              {data.length === 0 ? (
+              {currentItems.length === 0 ? (
                 <div className="text-center py-10">
                   <p className="text-gray-500 dark:text-gray-400">
                     Tidak ada produk ditemukan.
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {data.map((product) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3  gap-4">
+                  {currentItems.map((product) => (
                     <div
                       key={product.id}
                       onClick={() => navigate(`/product/${product.id}`)}
@@ -198,6 +254,7 @@ export default function Store() {
                   ))}
                 </div>
               )}
+              {totalPages > 0 && renderPaginationButtons()}
             </>
           )}
         </main>

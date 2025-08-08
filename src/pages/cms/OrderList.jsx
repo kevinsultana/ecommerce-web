@@ -16,6 +16,7 @@ export default function OrderList() {
       setOrderList(data);
     } catch (error) {
       console.log("Gagal mengambil data order:", error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }

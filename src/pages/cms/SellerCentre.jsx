@@ -109,6 +109,7 @@ export default function SellerCentre() {
       setFilteredProducts(products);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }
@@ -121,6 +122,7 @@ export default function SellerCentre() {
       setCategories(categories);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     }
   };
 
@@ -130,6 +132,7 @@ export default function SellerCentre() {
       setOrders(res.docs.map((doc) => doc.data()));
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     }
   };
 

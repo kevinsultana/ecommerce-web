@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { db } from "../../firebase/firebase";
 import formatRupiah from "../../utils/FormatRupiah";
+import Swal from "sweetalert2";
 
 const productData = [
   {
@@ -67,6 +68,7 @@ export default function Airpods() {
       setProducts(res);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }

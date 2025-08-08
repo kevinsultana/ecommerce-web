@@ -4,6 +4,7 @@ import { db } from "../../firebase/firebase";
 import { useNavigate } from "react-router";
 import formatRupiah from "../../utils/FormatRupiah";
 import IphoneProductCarosel from "../../components/IphoneProductCarosel";
+import Swal from "sweetalert2";
 
 export default function Iphone() {
   const [selectedCategory, setSelectedCategory] = useState("smartphone");
@@ -28,6 +29,7 @@ export default function Iphone() {
       setProducts(res);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }

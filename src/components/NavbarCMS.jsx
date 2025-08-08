@@ -1,6 +1,5 @@
 import React from "react";
 import { MdMenu } from "react-icons/md";
-import { Link } from "react-router";
 
 export default function NavbarCMS({ onClick }) {
   return (
@@ -11,13 +10,6 @@ export default function NavbarCMS({ onClick }) {
         </span>
         <a className="text-xl lg:px-4">Seller Dashboard</a>
       </div>
-      {/* <div className="flex-none">
-        <ul className="btn btn-ghost px-1">
-          <li>
-            <Link to="/">Back to Home Page</Link>
-          </li>
-        </ul>
-      </div> */}
     </nav>
   );
 }

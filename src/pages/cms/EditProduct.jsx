@@ -27,7 +27,6 @@ export default function EditProduct() {
     imgUrl: "",
   });
 
-  const [loading, setLoading] = useState(true);
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [categories, setCategories] = useState([]);
@@ -43,6 +42,7 @@ export default function EditProduct() {
       }
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     }
   };
 
@@ -57,6 +57,7 @@ export default function EditProduct() {
       setCategories(categories);
     } catch (error) {
       console.log(error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     }
   };
 

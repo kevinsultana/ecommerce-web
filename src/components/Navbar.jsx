@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { BiCart } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
 import { MdMenu } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
@@ -52,7 +51,6 @@ export default function Navbar() {
             >
               <MdMenu className="h-6 w-6" />
             </button>
-            {/* TODO: Implementasi dropdown menu untuk mobile */}
           </div>
           <Link
             to="/"
@@ -142,7 +140,6 @@ export default function Navbar() {
 
         {/* Ikon Profil dan Keranjang */}
         <div className="flex items-center space-x-4">
-          {/* Tombol Keranjang */}
           <button
             onClick={handleCartClick}
             className="relative p-2 text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-300 dark:hover:text-blue-400 cursor-pointer"
@@ -155,7 +152,6 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* Tombol Profil */}
           <button
             onClick={handleProfileClick}
             className="p-2 text-gray-600 hover:text-blue-500 transition-colors flex items-center dark:text-gray-300 dark:hover:text-blue-400 cursor-pointer"
@@ -164,13 +160,13 @@ export default function Navbar() {
               <img
                 src={userData?.photoProfile || "/img/userPlaceholder.png"}
                 alt="profile"
-                className="h-7 w-7 rounded-full"
+                className="h-7 w-7 rounded-full object-cover"
               />
             ) : (
               <img
                 src={userData?.photoProfile || "/img/userPlaceholder.png"}
                 alt="profile"
-                className="h-7 w-7 rounded-full"
+                className="h-7 w-7 rounded-full object-cover"
               />
             )}
             <span className="ml-2">

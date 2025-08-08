@@ -1,6 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
+import Swal from "sweetalert2";
 
 export default function Message() {
   const [loading, setLoading] = useState(false);
@@ -13,6 +14,7 @@ export default function Message() {
       setData(data);
     } catch (error) {
       console.log("Gagal mengambil data order:", error);
+      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
     } finally {
       setLoading(false);
     }

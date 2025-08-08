@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { auth, googleProvider } from "../../firebase/firebase";
+import { auth, db, googleProvider } from "../../firebase/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -48,7 +49,18 @@ export default function Login() {
   const handleGoogleSignIn = async () => {
     try {
       setLoadingBtn(true);
-      await signInWithPopup(auth, googleProvider);
+      const res = await signInWithPopup(auth, googleProvider);
+      const userRef = doc(db, "users", res.user.uid);
+      const docSnap = await getDoc(userRef);
+
+      if (!docSnap.exists()) {
+        await setDoc(doc(db, "users", res.user.uid), {
+          userName: res.user.email.split("@")[0],
+          email: res.user.email,
+          role: "user",
+          photoProfile: res.user.photoURL || "",
+        });
+      }
       Swal.fire("Login Success with Google!");
       setLoadingBtn(false);
       navigate("/", { replace: true });
