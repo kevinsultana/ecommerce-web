@@ -118,21 +118,53 @@ export default function SellerCentre() {
   const getCategories = async () => {
     try {
       const querySnap = await getDocs(collection(db, "categories"));
-      const categories = querySnap.docs.map((doc) => doc.data());
+      const categories = querySnap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setCategories(categories);
     } catch (error) {
-      console.log(error);
-      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
+      console.error("Error fetching categories:", error);
+      if (error.code === "permission-denied") {
+        Swal.fire(
+          "Akses Ditolak",
+          "Anda tidak memiliki izin untuk melihat kategori.",
+          "error"
+        );
+      } else {
+        Swal.fire(
+          "Gagal",
+          "Terjadi kesalahan saat mengambil data kategori.",
+          "error"
+        );
+      }
     }
   };
 
   const fetchOrders = async () => {
     try {
       const res = await getDocs(collection(db, "pesanan"));
-      setOrders(res.docs.map((doc) => doc.data()));
+      setOrders(
+        res.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+      );
     } catch (error) {
-      console.log(error);
-      Swal.fire("Gagal", "Terjadi kesalahan saat mengambil data.", "error");
+      console.error("Error fetching orders:", error);
+      if (error.code === "permission-denied") {
+        Swal.fire(
+          "Akses Ditolak",
+          "Anda tidak memiliki izin untuk melihat pesanan.",
+          "error"
+        );
+      } else {
+        Swal.fire(
+          "Gagal",
+          "Terjadi kesalahan saat mengambil data pesanan.",
+          "error"
+        );
+      }
     }
   };
 

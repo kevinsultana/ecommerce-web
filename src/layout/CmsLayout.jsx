@@ -7,38 +7,32 @@ import NavbarCMS from "../components/NavbarCMS";
 import SidebarCMS from "../components/SidebarCMS";
 
 export default function CmsLayout() {
-  const { userRole } = useContext(UserContext);
+  const { userRole, loading } = useContext(UserContext); // pastikan ada loading
   const navigate = useNavigate();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   useEffect(() => {
-    if (userRole !== "admin") {
+    if (loading) return;
+    // Jangan redirect jika userRole masih null (belum dapat data user)
+    if (userRole && userRole !== "admin") {
       navigate("/auth/login", { replace: true });
     }
-  }, [userRole]);
+  }, [userRole, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white text-black dark:bg-gray-800 dark:text-white transition-all duration-300">
-      <NavbarCMS onClick={() => setIsSideBarOpen(!isSideBarOpen)} />
-
-      <div className="flex flex-1 h-auto">
-        {/* Sidebar */}
-        <SidebarCMS
-          isSideBarOpen={isSideBarOpen}
-          onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-          onClickNav={() => setIsSideBarOpen(false)}
-        />
-
-        {/* Overlay for mobile */}
-        {isSideBarOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-            onClick={() => setIsSideBarOpen(false)}
-          ></div>
-        )}
-
-        {/* Main Content Area */}
-        <main className={`flex-1  lg:p-6 overflow-auto `}>
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+      <SidebarCMS isOpen={isSideBarOpen} setIsOpen={setIsSideBarOpen} />
+      <div className="flex-1 flex flex-col">
+        <NavbarCMS setIsSideBarOpen={setIsSideBarOpen} />
+        <main className="flex-1 p-6">
           <Outlet />
         </main>
       </div>

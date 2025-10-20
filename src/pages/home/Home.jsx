@@ -1,29 +1,7 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { getDocs, collection } from "firebase/firestore";
-import formatRupiah from "../../utils/FormatRupiah";
-import { db } from "../../firebase/firebase";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-
-  const getProducts = async () => {
-    try {
-      const querySnap = await getDocs(collection(db, "products"));
-      const products = querySnap.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setProducts(products);
-    } catch (error) {
-      console.log("Error fetching products:", error);
-    }
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-all duration-300">
