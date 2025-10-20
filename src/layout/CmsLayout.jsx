@@ -29,7 +29,10 @@ export default function CmsLayout() {
 
   return (
     <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
-      <SidebarCMS isOpen={isSideBarOpen} setIsOpen={setIsSideBarOpen} />
+      <SidebarCMS
+        isSideBarOpen={isSideBarOpen}
+        onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+      />
       <div className="flex-1 flex flex-col">
         <NavbarCMS setIsSideBarOpen={setIsSideBarOpen} />
         <main className="flex-1 p-6">
