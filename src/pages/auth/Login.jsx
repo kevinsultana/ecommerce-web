@@ -140,7 +140,7 @@ export default function Login() {
           </p>
           <p className="text-center mt-4 text-sm text-gray-400 underline dark:text-gray-300">
             Untuk Tes aplikasi ini silahkan login dengan <br />
-            email = testing@mail.com
+            email = admin@mail.com
             <br />
             password = 123123
           </p>
