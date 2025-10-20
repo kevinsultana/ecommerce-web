@@ -16,15 +16,21 @@ export const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-        const docSnapRef = await getDoc(doc(db, "users", user.uid));
-        if (docSnapRef.exists()) {
-          const userData = {
-            ...docSnapRef.data(),
-            id: user.uid,
-          };
-          setUserRole(userData.role);
-          setUserData(userData);
-        } else {
+        try {
+          const docSnapRef = await getDoc(doc(db, "users", user.uid));
+          if (docSnapRef.exists()) {
+            const userData = {
+              ...docSnapRef.data(),
+              id: user.uid,
+            };
+            setUserRole(userData.role);
+            setUserData(userData);
+          } else {
+            setUserRole(null);
+            setUserData(null);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
           setUserRole(null);
           setUserData(null);
         }
